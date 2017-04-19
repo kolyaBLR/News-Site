@@ -39,7 +39,7 @@ class AuthenticationOfController extends DefaultController
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('/auth');
+            return $this->redirectToRoute('/');
         }
         return $this->render('authorize/registrations.html.twig', array(
             'form' => $form->createView(),

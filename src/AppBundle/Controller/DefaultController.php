@@ -12,6 +12,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 
 class DefaultController extends Controller
@@ -28,25 +31,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/form")
-     */
-    public function createAction()
-    {
-        $user = new DataUser();
-        $user->setEmail('tomyaloy@mail.ru');
-        $user->setFirstName('Vadim');
-        $user->setLastName('Tom');
-        $user->setPassword('vad101');
-        $user->setUserLevelAccess();
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-
-        return new Response('Saved. ID -> '. $user->getId());
-    }
-
-    /**
      * @Route("/user/{id}")
      * @ParamConverter("post", class="AppBundle:DataUser")
      */
@@ -60,4 +44,16 @@ class DefaultController extends Controller
         return new Response(print_r($user));
     }
 
+    /**
+     * @Route("/show")
+     */
+    public function viewAllUsers()
+    {
+        $users =$this->getDoctrine()->getRepository('AppBundle:DataUser')->findAll();
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers,$encoders);
+        $jsonContent = $serializer->serialize($users, 'json');
+        return new Response(var_dump($jsonContent));
+    }
 }

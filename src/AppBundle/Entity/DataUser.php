@@ -101,4 +101,5 @@ class DataUser
     {
         $this->userLevelAccess = 'Normal';
     }
+
 }
