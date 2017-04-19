@@ -60,12 +60,4 @@ class DefaultController extends Controller
         return new Response(print_r($user));
     }
 
-    /**
-     * @Route("/getUsers")
-     */
-    public function getUsersAdminGrid(Response $response)
-    {
-        return new Response(var_dump(json_encode($this->getDoctrine()->getRepository('AppBundle:DataUser')
-            ->findAll())));
-    }
 }
