@@ -116,7 +116,6 @@ class DataUser implements UserInterface
     }
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
     }
 
     /**
