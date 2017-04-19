@@ -23,30 +23,6 @@ class AuthenticationOfController extends DefaultController
             'form' => $form->createView(),
         ));
     }
-
-
-    /**
-     * @Route("/reg")
-     */
-    public function registrationAction(Request $request)
-    {
-        $user = new DataUser();
-        $user->setUserLevelAccess();
-        $form = $this->createForm(RegistrationType::class, $user);
-        $form -> handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
-            $em =$this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            return $this->redirectToRoute('/');
-        }
-        return $this->render('authorize/registrations.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
-
-
     /**
      * @Route("/passwres")
      */

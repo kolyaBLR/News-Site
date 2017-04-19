@@ -4,21 +4,16 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
  * @ORM\Table(name="data_user")
  * @UniqueEntity(fields="email", message="This email is already used")
  */
-class DataUser
+class DataUser implements UserInterface
 {
-    public function __construct()
-    {
-
-    }
-
-    /**
-     * @ORM\Column(name="id", type="integer")
+      /**
+     * @ORM\Column(name="id", type="integer", unique=true)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -32,17 +27,17 @@ class DataUser
         $this->id;
     }
     /**
-     * @ORM\Column(name="first_name", type="string", length = 128)
+     * @ORM\Column(name="user_name", type="string", length = 128)
      * @Assert\NotBlank()
      */
-    private $firstName;
-    public function getFirstName()
+    private $userName;
+    public function getUserName()
     {
-        return $this->firstName;
+        return $this->userName;
     }
-    public function setFirstName(string $firstName)
+    public function setUserName(string $userName)
     {
-        $this->firstName = $firstName;
+        $this->userName = $userName;
     }
 
     /**
@@ -61,8 +56,22 @@ class DataUser
     }
 
     /**
-     * @ORM\Column(name="password",type="string", length = 4096)
-     * @Assert\NotBlank()
+     *
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+    public function setPlainPassword(string $plainPassword)
+    {
+        $this->password = $plainPassword;
+    }
+
+    /**
+     * @ORM\Column(name="password",type="string", length=64)
+     *
      */
     private $password;
     public function getPassword()
@@ -75,7 +84,7 @@ class DataUser
     }
 
     /**
-     * @ORM\Column(name="email",type="string", length = 128)
+     * @ORM\Column(name="email",type="string", length = 128, unique=true)
      * @Assert\NotBlank()
      */
     private $email;
@@ -92,14 +101,45 @@ class DataUser
      * @ORM\Column(name="access_level", type="string", length = 32);
      *
      */
-    private $userLevelAccess;
-    public function getUserLevelAccess()
+    private $getRoles;
+    public function getRoles()
     {
-        return $this->userLevelAccess;
+        return $this->getRoles;
     }
-    public function setUserLevelAccess()
+    public function setRoles()
     {
-        $this->userLevelAccess = 'Normal';
+        $this->getRoles = 'ROLE_USER';
+    }
+    public function getSalt()
+    {
+        return null;
+    }
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 
+    /**
+     * Set getRoles
+     *
+     * @param string $getRoles
+     *
+     * @return DataUser
+     */
+    public function setGetRoles($getRoles)
+    {
+        $this->getRoles = $getRoles;
+
+        return $this;
+    }
+
+    /**
+     * Get getRoles
+     *
+     * @return string
+     */
+    public function getGetRoles()
+    {
+        return $this->getRoles;
+    }
 }

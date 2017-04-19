@@ -2,6 +2,9 @@
 # http://symfony.com/doc/current/security.html
 security:
 
+    encoders:
+        AppBundle\Entity\DataUser:
+            algorithm: bcrypt
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
@@ -16,7 +19,8 @@ security:
         main:
             anonymous: ~
             # activate different ways to authenticate
-
+    access_control:
+        - {path: ^/admin, roles: ROLE_ADMIN }
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
             #http_basic: ~
 
