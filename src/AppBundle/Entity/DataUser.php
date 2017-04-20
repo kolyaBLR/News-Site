@@ -99,7 +99,6 @@ class DataUser implements UserInterface
 
     /**
      * @ORM\Column(name="access_level", type="string", length = 32);
-     *
      */
     private $getRoles;
     public function getRoles()
@@ -140,5 +139,18 @@ class DataUser implements UserInterface
     public function getGetRoles()
     {
         return $this->getRoles;
+    }
+
+    /**
+     * @ORM\Column(name=subscription_email", type="bool");
+     */
+    private $subscriptionEmail;
+    public function getSubscriptionEmail()
+    {
+        return $this->subscriptionEmail;
+    }
+    public function setSubscriptionEmail(bool $subscriptionEmail)
+    {
+        $this->subscriptionEmail = $subscriptionEmail;
     }
 }
