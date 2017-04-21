@@ -11,18 +11,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthenticationOfController extends DefaultController
+class AuthenticationOfController extends Controller
 {
+
     /**
-     * @Route("/auth")
+     * @Route("/login", name="login")
      */
-    public function authorizationAction(Request $request)
+    public function loginAction(Request $request)
     {
-        $form = $this->createForm(AuthorizationType::class, new DataUser());
-        return $this->render('authorize/authorizations.html.twig', array(
-            'form' => $form->createView(),
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('authorize/login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
         ));
     }
+
     /**
      * @Route("/passwres")
      */

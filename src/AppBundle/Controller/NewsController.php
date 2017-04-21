@@ -21,9 +21,6 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 class NewsController extends Controller
 {
     /**
-     * Здесь будет сохраняться уже написаннаня статься
-     * тут расскажешь мне как работать с ролями
-     * что бы ограничить достук юзерам
      * @Route("/news/create")
      */
     public function createNewsAction(Request $request)
@@ -43,32 +40,22 @@ class NewsController extends Controller
     }
 
     /**
-     * Здесь должен выводиться список новостей
-     * на данный момент здесь выводятся все новости
-     * параметры списка новостей:
-     * Заголовок новости и его изображение
-     * так же id для формирвоания ссылки
-     * (Я это пока не могу сделать так как до сих пор мучаюсь с PDO драйвером)
      * @Route("/news")
      */
     public function viewTitleNewsAction(Request $request)
     {
-        $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')->findAll();
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
-        $newsJson = $serializer->serialize($news, 'json');
-        return new Response(var_dump($newsJson));
+        $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+            ->findAll();
+        return new Response($news);
     }
 
     /**
-     * Здесь будет выводитсья одна стотья по её идентификатору
      * @Route("/news/{id}")
      * @ParamConverter("post", class="AppBundle:DataNews")
      */
     public function viewNewsAction(DataNews $newsId)
     {
-        $news = $this->getDoctrine()->getRepository('AppBundle:DataUser')
+        $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
             ->find($newsId);
         if (!$newsId) {
             throw $this->createNotFoundException('Not found by ID ' .$newsId);

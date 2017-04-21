@@ -30,30 +30,6 @@ class DefaultController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/user/{id}")
-     * @ParamConverter("post", class="AppBundle:DataUser")
-     */
-    public function showAction (DataUser $userId)
-    {
-        $user = $this->getDoctrine()->getRepository('AppBundle:DataUser')
-            ->find($userId);
-        if (!$userId) {
-            throw $this->createNotFoundException('Not found by ID ' .$userId);
-        }
-        return new Response(print_r($user));
-    }
 
-    /**
-     * @Route("/show")
-     */
-    public function viewAllUsers()
-    {
-        $users =$this->getDoctrine()->getRepository('AppBundle:DataUser')->findAll();
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers,$encoders);
-        $jsonContent = $serializer->serialize($users, 'json');
-        return new Response(var_dump($jsonContent));
-    }
+
 }

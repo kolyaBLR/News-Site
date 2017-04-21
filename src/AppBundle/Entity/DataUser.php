@@ -100,56 +100,37 @@ class DataUser implements UserInterface
     /**
      * @ORM\Column(name="access_level", type="string", length = 32);
      */
-    private $getRoles;
+    private $roles;
     public function getRoles()
     {
-        return $this->getRoles;
+        return $this->roles;
     }
-    public function setRoles()
+
+    public function setRoles($roles='ROLE_USER')
     {
-        $this->getRoles = 'ROLE_USER';
+        $this->roles = $roles;
     }
+
     public function getSalt()
     {
         return null;
     }
+
     public function eraseCredentials()
     {
+
     }
 
-    /**
-     * Set getRoles
-     *
-     * @param string $getRoles
-     *
-     * @return DataUser
-     */
-    public function setGetRoles($getRoles)
-    {
-        $this->getRoles = $getRoles;
-
-        return $this;
-    }
 
     /**
-     * Get getRoles
-     *
-     * @return string
-     */
-    public function getGetRoles()
-    {
-        return $this->getRoles;
-    }
-
-    /**
-     * @ORM\Column(name=subscription_email", type="bool");
+     * @ORM\Column(name="subscription_email", type="boolean");
      */
     private $subscriptionEmail;
     public function getSubscriptionEmail()
     {
         return $this->subscriptionEmail;
     }
-    public function setSubscriptionEmail(bool $subscriptionEmail)
+    public function setSubscriptionEmail($subscriptionEmail = false)
     {
         $this->subscriptionEmail = $subscriptionEmail;
     }

@@ -20,6 +20,7 @@ class RegistrationController extends Controller
     {
         $user = new DataUser();
         $user->setRoles();
+        $user->setSubscriptionEmail();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
