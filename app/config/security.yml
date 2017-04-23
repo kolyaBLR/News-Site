@@ -5,12 +5,15 @@ security:
     encoders:
         AppBundle\Entity\DataUser:
             algorithm: bcrypt
+
     role_hierarchy:
             ROLE_ADMIN: [ROLE_USER]
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        our_db_provider:
+                    entity:
+                        class: AppBundle:DataUser
+                        property: email
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -27,7 +30,7 @@ security:
 
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             form_login:
-                  username_parameter: _email
+
                   login_path: login
                   check_path: login
 
