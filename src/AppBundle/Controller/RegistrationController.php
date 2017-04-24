@@ -31,8 +31,9 @@ class RegistrationController extends Controller
             $em->persist($user);
             $em->flush();
             return $this->redirectToRoute('email', array(
-                'name' => 'Kolya'
-            ));
+                'name' =>  "$user->getUserName()",
+                'emaul' => "$user->getEmail()"
+                ));
         }
         return $this->render('authorize/registrations.html.twig', array(
             'form' => $form->createView(),

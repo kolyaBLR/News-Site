@@ -13,17 +13,17 @@ use Symfony\Component\HttpFoundation\Response;
 class EmailsController extends Controller
 {
     /**
-     * @Route("/email", name="email")
+     * @Route("/email/{name}/{email}", name="email")
      */
-    public function sendRegistrationEmailAction()
+    public function sendRegistrationEmailAction(string $name, string $email)
     {
         $message = \Swift_Message::newInstance()
-            ->setSubject('Hello User')
+            ->setSubject("Hello $name!")
             ->setFrom('bobrovkolja@gmail.com')
-            ->setTo('bk97w@bk.ru')
+            ->setTo($email)
             ->setBody(
                 $this->renderView('Emails/registration.html.twig', array(
-                    'name' => 'Kolya'
+                    'name' => $name
                 )),
                 'text/html'
             );
