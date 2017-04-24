@@ -22,7 +22,9 @@ class EmailsController extends Controller
             ->setFrom('bobrovkolja@gmail.com')
             ->setTo('bk97w@bk.ru')
             ->setBody(
-                $this->renderView('Emails/registration.html.twig'),
+                $this->renderView('Emails/registration.html.twig', array(
+                    'name' => 'Kolya'
+                )),
                 'text/html'
             );
         $this->get('mailer')->send($message);

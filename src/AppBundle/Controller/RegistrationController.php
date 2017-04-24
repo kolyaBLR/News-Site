@@ -30,7 +30,9 @@ class RegistrationController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('email', array(
+                'name' => 'Kolya'
+            ));
         }
         return $this->render('authorize/registrations.html.twig', array(
             'form' => $form->createView(),
