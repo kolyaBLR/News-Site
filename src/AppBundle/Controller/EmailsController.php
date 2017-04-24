@@ -12,30 +12,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EmailsController extends Controller
 {
-    public function addEmailUserAction()
-    {
-
-    }
-
     /**
      * @Route("/email", name="email")
      */
-    public function sendEmailAction(Request $request)
+    public function sendRegistrationEmailAction()
     {
         $message = \Swift_Message::newInstance()
-            ->setSubject('Hello Email')
+            ->setSubject('Hello User')
             ->setFrom('bobrovkolja@gmail.com')
             ->setTo('bk97w@bk.ru')
             ->setBody(
-                $this->renderView(
-                // app/Resources/views/Emails/registration.html.twig
-                    'Emails/registration.html.twig',
-                    array('name' => 'Nikolay')
-                ),
+                $this->renderView('Emails/registration.html.twig', array(
+                    'name' => 'Kolya'
+                )),
                 'text/html'
             );
         $this->get('mailer')->send($message);
-
-        return $this->redirectToRoute('email');
+        return $this->redirectToRoute('main');
     }
 }
