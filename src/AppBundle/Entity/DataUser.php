@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class DataUser implements UserInterface
 {
-      /**
+    /**
      * @ORM\Column(name="id", type="integer", unique=true)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -21,10 +21,6 @@ class DataUser implements UserInterface
     public function getId()
     {
         return $this->id;
-    }
-    public function setId()
-    {
-        $this->id;
     }
     /**
      * @ORM\Column(name="user_name", type="string", length = 128)

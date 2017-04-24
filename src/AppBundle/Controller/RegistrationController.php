@@ -30,9 +30,11 @@ class RegistrationController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+            $userName = $user->getUserName();
+            $userEmail = $user->getEmail();
             return $this->redirectToRoute('email', array(
-                'name' =>  "$user->getUserName()",
-                'emaul' => "$user->getEmail()"
+                'name' =>  "$userName",
+                'email' => "$userEmail"
                 ));
         }
         return $this->render('authorize/registrations.html.twig', array(

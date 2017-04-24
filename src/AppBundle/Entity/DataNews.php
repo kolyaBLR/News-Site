@@ -127,7 +127,7 @@ class DataNews
     }
 
     /**
-     * @ORM\Column(name="category",type="DateTime")
+     * @ORM\Column(name="date",type="datetime")
      * @Assert\NotBlank()
      */
     private $dataPublication;

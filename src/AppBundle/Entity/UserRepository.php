@@ -10,14 +10,5 @@ namespace AppBundle\Entity;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
-    /*
-    public function addUser(DataUser $user)
-    {
-        $manager = $this->getEntityManager();
-        $manager->persist($user);
-        $manager->flush();
-    }
-    */
-
 
 }
