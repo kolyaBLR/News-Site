@@ -40,13 +40,13 @@ class NewsController extends Controller
     }
 
     /**
-     * @Route("/news")
+     * @Route("/news", name="news")
      */
     public function viewTitleNewsAction(Request $request)
     {
-        $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
-            ->findAll();
-        return new Response($news);
+        /*$news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+            ->findAll();*/
+        return $this->render('news/news.html.twig');
     }
 
     /**
