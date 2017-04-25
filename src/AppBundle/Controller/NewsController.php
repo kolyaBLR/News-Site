@@ -49,7 +49,19 @@ class NewsController extends Controller
     {
         /*$news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
             ->findAll();*/
-        return $this->render('news/news.html.twig');
+        $user = new DataUser();
+        $user->setUserName('Kolya');
+        $user->setLastName('Bobrov');
+        $news1 = new DataNews();
+        $news1->setTitleImage('http://media.gettyimages.com/photos/color-explosion-picture-id503271069?s=612x612');
+        $news1->setTitleText('Title Text, dsad ss 132 dsad 1123 hello!');
+        $news1->setContent('Краткое содержание. Тут идёт текст новости а через 40 символов ставим много точек...Краткое содержание. Тут идёт текст новости а через 40 символов ставим много точек...Краткое содержание. Тут идёт текст новости а через 40 символов ставим много точек.');
+        $news1->setContent(substr($news1->getContent(), 0, 400) . '..');
+        $news = array($news1, $news1, $news1, $news1,$news1, $news1,);
+        return $this->render('news/news.html.twig', array(
+            'News' => $news,
+            'user' => $user,
+        ));
     }
 
     /**

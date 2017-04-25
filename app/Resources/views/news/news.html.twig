@@ -40,8 +40,8 @@
             color: white;
         }
         .sizeImage {
-            height: 200px;
-            width: 200px;
+            height: 150px;
+            width: 150px;
             float: left;
             margin-right: 20px;
         }
@@ -55,7 +55,6 @@
     </style>
 </head>
 <body>
-
         <ul class="menu">
             <li><a href=#>Sudmenu 2</a></li>
             <li><a href=#>Sudmenu 2</a></li>
@@ -65,21 +64,23 @@
             <li><a href=#>Sudmenu 2</a></li>
         </ul>
     <div>
+        {% for news in News %}
         <div class="newsid">
-            <h2 class="text-center"><a href="#">Заголовок и ссылка Новости!</a></h2>
+            <h2 class="text-center"><a href="#">{{ news.titleText }}</a></h2>
             <a href="#">
-                <img class="sizeImage" src="http://media.gettyimages.com/photos/color-explosion-picture-id503271069?s=612x612">
+                <img class="sizeImage" src="{{ news.titleImage }}">
             </a>
             <span>
-                Краткое содержание. Тут идёт текст новости а через 40 символов ставим много точек...Краткое содержание. Тут идёт текст новости а через 40 символов ставим много точек...Краткое содержание. Тут идёт текст новости а через 40 символов ставим много точек...
-                <a href="#"> продолжение</a></br></br>
+                {{ news.content }}
+                <a href="news/{{ news.id }}"> продолжение</a></br></br>
                 <p>
-                    author: ФИО автора</br>
-                    data: Дата публикации</br>
-                    category: Кателгория
+                    author: {{ user.userName }} {{ user.lastName }}</br>
+                    data: {{ news.dataPublication }}</br>
+                    category: {{ news.category }}
                 </p>
             </span>
         </div>
+        {% endfor %}
     </div>
 </body>
 </html>
