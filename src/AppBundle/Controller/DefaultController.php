@@ -2,9 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\DataNews;
 use AppBundle\Entity\DataUser;
 use AppBundle\Entity\UserRepository;
 use AppBundle\Form\AuthorizationType;
+use AppBundle\Form\ImageType;
 use AppBundle\Form\PasswordResetType;
 use AppBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -30,6 +32,17 @@ class DefaultController extends Controller
         ]);
     }
 
-
+    /**
+     * @Route("/mytest", name="mytest")
+     */
+    public function createImage(Request $request)
+    {
+        $news = new DataNews();
+        $form = $this->createForm(ImageType::class, $news);
+        $form->handleRequest($request);
+        return $this->render('authorize/passwordReset.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
 
 }
