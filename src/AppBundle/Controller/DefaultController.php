@@ -6,7 +6,7 @@ use AppBundle\Entity\DataNews;
 use AppBundle\Entity\DataUser;
 use AppBundle\Entity\UserRepository;
 use AppBundle\Form\AuthorizationType;
-use AppBundle\Form\createNews;
+use AppBundle\Form\createNewsType;
 use AppBundle\Form\PasswordResetType;
 use AppBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

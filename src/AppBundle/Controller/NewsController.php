@@ -7,7 +7,7 @@ use AppBundle\Entity\DataNews;
 use AppBundle\Entity\DataUser;
 use AppBundle\Entity\NewsCategory;
 use AppBundle\Form\AuthorizationType;
-use AppBundle\Form\createNews;
+use AppBundle\Form\createNewsType;
 use AppBundle\Form\PasswordResetType;
 use AppBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,7 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class NewsController extends Controller
 {
@@ -35,7 +34,7 @@ class NewsController extends Controller
         $create->flush();
         return new Response('Saved. ID -> '. $news->getId());*/
         $news = new DataNews();
-        $form = $this->createForm(createNews::class, $news);
+        $form = $this->createForm(createNewsType::class, $news);
         $form->handleRequest($request);
         return $this->render('news/createNews.html.twig', array(
             'form' => $form->createView(),
@@ -81,14 +80,4 @@ class NewsController extends Controller
         }
         return new Response($news);
     }
-
-    /**
-     * @Route("/category")
-     *
-     */
-    public function createCategory(Request $request)
-    {
-
-    }
-
 }

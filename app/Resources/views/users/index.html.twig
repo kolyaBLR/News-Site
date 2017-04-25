@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+</head>
+<body>
+    <div id="entities-grid"></div>
+    <script>
+        start(
+            "getUsers",
+            "getCountPage",
+            ["id", "title", "created_date"], // массив с именами полей сущности, по которым должна быть возможна сортировка
+            ["id", "email", "first name", "last name"], // массив с именами полей сущности, по которым должна быть возможна фильтрация
+            20
+        )
+
+        function tag(tag) {
+            return "<" + tag + ">";
+        }
+
+        function doubleTag(tag, value) {
+            return "<" + tag + ">" + value + "</" + tag + ">";
+        }
+
+        function showFilter(filter) {
+            var htmlCode = "";
+            htmlCode += tag("table class='table'") + tag("tr");
+            for (var i = 0; i < filter.length; i++) {
+                htmlCode += tag("td") + doubleTag("label style='font-size:120%'", filter[i]) + tag("/td");
+                htmlCode += tag("td") + doubleTag("input type='text'", "") + tag("/td");
+            }
+
+            htmlCode += tag("td") + doubleTag("button class='btn' style='height: 90%'", "Поиск") + tag("/td");
+            htmlCode += tag("/tr") + tag("/table");
+            $("#filter").append(htmlCode);
+        }
+
+        function showUsers(data) {
+            var htmlCode = "";
+            htmlCode += tag("div class='table-responsive'");
+            htmlCode += tag("table class='table table-bordered table-hover table-condensed'");
+            htmlCode += tag("thead") + tag("tr");
+            htmlCode += doubleTag("th", "id");
+            htmlCode += doubleTag("th", "user name");
+            htmlCode += doubleTag("th", "last name");
+            htmlCode += doubleTag("th", "email");
+            htmlCode += doubleTag("th", "password");
+            htmlCode += doubleTag("th", "roles");
+            htmlCode += doubleTag("th", "subscription email");
+            htmlCode += tag("/tr") + tag("/thead") + tag("tbody");
+            for (var i = 0; i < data.length; i++) {
+                htmlCode += tag("tr");
+                htmlCode += doubleTag("th", data[i].id);
+                htmlCode += doubleTag("th", data[i].userName);
+                htmlCode += doubleTag("th", data[i].lastName);
+                htmlCode += doubleTag("th", data[i].email);
+                htmlCode += doubleTag("th", data[i].password);
+                htmlCode += doubleTag("th", data[i].roles);
+                htmlCode += doubleTag("th", data[i].subscriptionEmail);
+                htmlCode += tag("/tr");
+            }
+            htmlCode += tag("/tbody") + tag("/table") + tag("/div");
+            $("#grid").append(htmlCode);
+        }
+
+        function showPagination(count) {
+            var htmlCode = "";
+            htmlCode += tag("ul class='pagination'");
+            for (var i = 0; i < count; i++) {
+                htmlCode += tag("li");
+                htmlCode += doubleTag("a href='#'", i + 1);
+                htmlCode += tag("/li");
+            }
+            htmlCode += tag("/ul");
+            $("#pagination").append(htmlCode);
+        }
+
+        function showDiv() {
+            var htmlCode = "";
+            htmlCode += doubleTag("div id='filter'", '')
+            htmlCode += doubleTag("div id='grid'", '')
+            htmlCode += doubleTag("div id='pagination'", '')
+            $("#entities-grid").append(htmlCode);
+        }
+
+        function queryUsersAjax(url) {
+            $.ajax ({
+                url: url,
+                type: "GET",
+                data: ({
+                }),
+                dataType: "json",
+                success: showUsers
+            });
+        }
+
+        function queryCountPageAjax(url, count) {
+            $.ajax ({
+                url: url,
+                type: "GET",
+                data: ({
+                    rowsPerPage : count
+                }),
+                dataType: "text",
+                success: showPagination
+            });
+        }
+
+        function start(dataUrl, countPageUrl, sortableColumns, filterableColumns, rowsPerPage) {
+            showDiv();
+            showFilter(filterableColumns);
+            queryUsersAjax(dataUrl);
+            queryCountPageAjax(countPageUrl, rowsPerPage);
+        }
+    </script>
+</body>
+</html>
