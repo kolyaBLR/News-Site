@@ -25,7 +25,7 @@ class ImageType extends AbstractType
             ->add('titleText', TextType::class)
             ->add('content', TextType::class)
             ->add('titleImage', FileType::class, array(
-                'label' => 'Upload foto'));
+                'label' => 'Upload photo'));
     }
     public function configureOptions(OptionsResolver $resolver)
     {
