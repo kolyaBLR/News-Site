@@ -7,7 +7,7 @@ use AppBundle\Entity\DataNews;
 use AppBundle\Entity\DataUser;
 use AppBundle\Entity\NewsCategory;
 use AppBundle\Form\AuthorizationType;
-use AppBundle\Form\ImageType;
+use AppBundle\Form\createNews;
 use AppBundle\Form\PasswordResetType;
 use AppBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,12 +29,17 @@ class NewsController extends Controller
      */
     public function createNewsAction(Request $request)
     {
-        $news = new DataNews();
+        /*$news = new DataNews();
         $create = $this->getDoctrine()->getManager();
         $create->persist($news);
         $create->flush();
-
-        return new Response('Saved. ID -> '. $news->getId());
+        return new Response('Saved. ID -> '. $news->getId());*/
+        $news = new DataNews();
+        $form = $this->createForm(createNews::class, $news);
+        $form->handleRequest($request);
+        return $this->render('news/createNews.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     /**

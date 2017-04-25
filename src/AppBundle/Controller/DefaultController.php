@@ -6,7 +6,7 @@ use AppBundle\Entity\DataNews;
 use AppBundle\Entity\DataUser;
 use AppBundle\Entity\UserRepository;
 use AppBundle\Form\AuthorizationType;
-use AppBundle\Form\ImageType;
+use AppBundle\Form\createNews;
 use AppBundle\Form\PasswordResetType;
 use AppBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -30,18 +30,5 @@ class DefaultController extends Controller
         return $this->render('default/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR,
         ]);
-    }
-
-    /**
-     * @Route("/mytest", name="mytest")
-     */
-    public function createImage(Request $request)
-    {
-        $news = new DataNews();
-        $form = $this->createForm(ImageType::class, $news);
-        $form->handleRequest($request);
-        return $this->render('createNews/createNews.html.twig', array(
-            'form' => $form->createView(),
-        ));
     }
 }

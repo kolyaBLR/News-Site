@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticationOfController extends Controller
 {
-
     /**
      * @Route("/login", name="login")
      */
@@ -40,6 +39,35 @@ class AuthenticationOfController extends Controller
     {
         $form = $this->createForm(PasswordResetType::class, new DataUser());
         return $this->render('authorize/passwordReset.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/register", name="registration")
+     */
+    public function registrationAction(Request $request)
+    {
+        $user = new DataUser();
+        $user->setRoles();
+        $user->setSubscriptionEmail();
+        $form = $this->createForm(RegistrationType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $this->get('security.password_encoder')
+                ->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $name = $user->getUserName() + ' ' + $user->getLastName();
+            $userEmail = $user->getEmail();
+            return $this->redirectToRoute('email', array(
+                'name' =>  "$name",
+                'email' => "$userEmail"
+            ));
+        }
+        return $this->render('authorize/registrations.html.twig', array(
             'form' => $form->createView(),
         ));
     }
