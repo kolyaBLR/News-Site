@@ -49,6 +49,9 @@ class NewsController extends Controller
     {
         /*$news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
             ->findAll();*/
+        $category = new NewsCategory();
+        $category->setCategory('dsad');
+        $categories = array($category, $category, $category, $category,$category, $category,);
         $user = new DataUser();
         $user->setUserName('Kolya');
         $user->setLastName('Bobrov');
@@ -61,6 +64,7 @@ class NewsController extends Controller
         return $this->render('news/news.html.twig', array(
             'News' => $news,
             'user' => $user,
+            'categories' => $categories,
         ));
     }
 

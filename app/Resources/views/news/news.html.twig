@@ -56,12 +56,10 @@
 </head>
 <body>
         <ul class="menu">
-            <li><a href=#>Sudmenu 2</a></li>
-            <li><a href=#>Sudmenu 2</a></li>
-            <li><a href=#>Sudmenu 2</a></li>
-            <li><a href=#>Sudmenu 2</a></li>
-            <li><a href=#>Sudmenu 2</a></li>
-            <li><a href=#>Sudmenu 2</a></li>
+            <li><a href="{{ url('main') }}">Home</a></li>
+            {% for category in categories %}
+                <li><a href="#">{{ category.category }}</a></li>
+            {% endfor %}
         </ul>
     <div>
         {% for news in News %}
