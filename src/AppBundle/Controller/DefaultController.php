@@ -40,9 +40,8 @@ class DefaultController extends Controller
         $news = new DataNews();
         $form = $this->createForm(ImageType::class, $news);
         $form->handleRequest($request);
-        return $this->render('authorize/passwordReset.html.twig', array(
+        return $this->render('createNews/createNews.html.twig', array(
             'form' => $form->createView(),
         ));
     }
-
 }

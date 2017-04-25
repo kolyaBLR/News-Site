@@ -1,0 +1,43 @@
+<html>
+<head><head>
+        <meta charset="UTF-8">
+        <title>new news</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script src="adminGrid.js"></script>
+    </head>
+</head>
+{{ form_start(form) }}
+<table class="table">
+<tr>
+    <td>{{ form_label(form.titleText) }}</td>
+    <td>{{ form_widget(form.titleText) }}</td>
+    <td>{{ form_errors(form.titleText) }}</td>
+</tr>
+
+<tr>
+    <td>{{ form_label(form.titleImage) }}</td>
+    <td>{{ form_widget(form.titleImage) }}</td>
+    <td>{{ form_errors(form.titleImage) }}</td>
+</tr>
+
+<tr>
+    <td>{{ form_label(form.content) }}</td>
+    <td>{{ form_widget(form.content) }}</td>
+    <td>{{ form_errors(form.content) }}</td>
+</tr>
+
+<tr>
+    <td>{{ form_label(form.category) }}</td>
+    <td>{{ form_widget(form.category) }}</td>
+    <td>{{ form_errors(form.category) }}</td>
+</tr>
+<tr>
+    <td><input type="submit" /></td>
+</tr>
+</table>
+{{ form_errors(form) }}
+{{ form_end(form) }}
+</html>
