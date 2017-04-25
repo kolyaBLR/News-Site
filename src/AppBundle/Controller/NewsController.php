@@ -2,9 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\AppBundle;
 use AppBundle\Entity\DataNews;
 use AppBundle\Entity\DataUser;
+use AppBundle\Entity\NewsCategory;
 use AppBundle\Form\AuthorizationType;
+use AppBundle\Form\ImageType;
 use AppBundle\Form\PasswordResetType;
 use AppBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -17,21 +20,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class NewsController extends Controller
 {
     /**
-     * @Route("/news/create")
+     * @Route("/news/create", name="create")
      */
     public function createNewsAction(Request $request)
     {
-        $news = new DataNews(
-            '1',
-            'title',
-            'link image',
-            'content text'
-        );
-
+        $news = new DataNews();
         $create = $this->getDoctrine()->getManager();
         $create->persist($news);
         $create->flush();
@@ -62,4 +60,14 @@ class NewsController extends Controller
         }
         return new Response($news);
     }
+
+    /**
+     * @Route("/category")
+     *
+     */
+    public function createCategory(Request $request)
+    {
+
+    }
+
 }

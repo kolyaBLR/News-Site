@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+   <form enctype="multipart/form-data" action="{{ path('create') }}"  method="post" role="form">
+    <table>
+          <tr>
+                  <td>Рубрика</td>
+                  <td><select name ="DataNews[category]" id="DataNews_category">
+                  <option disabled selected> Category</option>
+                          <option value="Finance">Finance</option>
+                  </select>
+                  </td>
+          </tr>
+          <tr>
+                  <td>Заголовок</td>
+                  <td><textarea name="DataNews[titleText]" cols="40" rows="2"></textarea></td>
+          </tr>
+          <tr>
+                  <td>Текст статьи</td>
+                  <td><textarea name="DataNews[content]" cols="70" rows="20"></textarea></td>
+          </tr>
+          <tr>             <td><input type="hidden" name="MAX_FILE_SIZE" value="30000" /></td>
+                           <td> Отправить этот файл: <input name="userfile" type="file" /></td>
+          </tr>
+          <tr>
+                  <td><input type="submit" value="Отправить"></td>
+          </tr>
+
+
+
+
+    </table>
+</form>
+
+</body>
+</html>

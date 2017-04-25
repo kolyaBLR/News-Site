@@ -5,6 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\NewsRepository")
@@ -12,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
  */
 class DataNews
 {
-    public function __construct(
+   /* public function __construct(
         string $idAuthor,
         string $titleText,
         string $titleImage,
@@ -27,7 +28,7 @@ class DataNews
         $this->content = $content;
         $this->category = $category;
         $this->dataPublication = $dataPublication;
-    }
+    } */
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -48,7 +49,7 @@ class DataNews
 
     /**
      * @ORM\Column(name="id_author", type="integer")
-     * @Assert\NotBlank()
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idAuthor;
 
@@ -80,7 +81,7 @@ class DataNews
 
     /**
      * @ORM\Column(name="title_image",type="string")
-     * @Assert\NotBlank()
+     * @Assert\Image(mimeTypes={ "image/*" })
      */
     private $titleImage;
 
