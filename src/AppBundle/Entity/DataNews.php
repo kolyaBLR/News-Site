@@ -6,6 +6,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\NewsRepository")
@@ -48,8 +51,10 @@ class DataNews
     }
 
     /**
+     * @ORM\ManyToOne(targetEntity="DataUser")
      * @ORM\Column(name="id_author", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\JoinColumn(name="id_author", referencedColumnName="id")
      */
     private $idAuthor;
 
@@ -113,7 +118,7 @@ class DataNews
 
     /**
      * @ORM\Column(name="category",type="string")
-     * @Assert\NotBlank()
+     * 
      */
     private $category;
 
@@ -138,8 +143,20 @@ class DataNews
         return $this->dataPublication;
     }
 
-    public function setDataPublication(DateTime $dataPublication = null)
+    public function setDataPublication($dataPublication)
     {
         $this->dataPublication = $dataPublication;
+    }
+
+    private $viewCount = 0;
+
+    public function getViewCount()
+    {
+        return $this->viewCount;
+    }
+
+    public function setViewCount($count)
+    {
+        $this->viewCount = $count;
     }
 }

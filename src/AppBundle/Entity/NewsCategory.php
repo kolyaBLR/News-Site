@@ -34,6 +34,6 @@ class NewsCategory
     }
     public function setCategory($category)
     {
-        $this->category=$category;
+        $this->category = $category;
     }
 }

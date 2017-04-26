@@ -28,6 +28,6 @@ class EmailsController extends Controller
                 'text/html'
             );
         $this->get('mailer')->send($message);
-        return $this->redirectToRoute('main');
+        return $this->redirectToRoute('login');
     }
 }

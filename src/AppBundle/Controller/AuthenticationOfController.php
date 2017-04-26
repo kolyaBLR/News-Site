@@ -49,7 +49,6 @@ class AuthenticationOfController extends Controller
     public function registrationAction(Request $request)
     {
         $user = new DataUser();
-        $user->setRoles();
         $user->setSubscriptionEmail();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
@@ -60,12 +59,12 @@ class AuthenticationOfController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            $name = $user->getUserName() + ' ' + $user->getLastName();
+            $name = $user->getFirstName() + ' ' + $user->getLastName();
             $userEmail = $user->getEmail();
             return $this->redirectToRoute('email', array(
-                'name' =>  "$name",
-                'email' => "$userEmail"
-            ));
+               'name' =>  "$name",
+               'email' => "$userEmail"
+           ));
         }
         return $this->render('authorize/registrations.html.twig', array(
             'form' => $form->createView(),

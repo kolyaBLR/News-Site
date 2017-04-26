@@ -28,14 +28,14 @@ class NewsController extends Controller
      */
     public function createNewsAction(Request $request)
     {
-        /*$news = new DataNews();
-        $create = $this->getDoctrine()->getManager();
-        $create->persist($news);
-        $create->flush();
-        return new Response('Saved. ID -> '. $news->getId());*/
         $news = new DataNews();
         $form = $this->createForm(createNewsType::class, $news);
         $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $saveNews = $this->getDoctrine()->getManager();
+            $saveNews->persist($news);
+            $saveNews->flush();
+        }
         return $this->render('news/createNews.html.twig', array(
             'form' => $form->createView(),
         ));
