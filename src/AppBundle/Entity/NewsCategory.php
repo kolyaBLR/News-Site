@@ -19,20 +19,23 @@ class NewsCategory
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * @ORM\Column(name="category", type="string", length=128, unique=true)
      */
     private $category;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getCategory()
     {
         return $this->category;
     }
-    public function setCategory($category)
+
+    public function setCategory(string $category)
     {
         $this->category = $category;
     }

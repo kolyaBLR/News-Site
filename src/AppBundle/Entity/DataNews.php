@@ -16,39 +16,12 @@ use Doctrine\Common\Collections\Collection;
  */
 class DataNews
 {
-   /* public function __construct(
-        string $idAuthor,
-        string $titleText,
-        string $titleImage,
-        string $content,
-        string $category,
-        DataType $dataPublication
-    )
-    {
-        $this->idAuthor = $idAuthor;
-        $this->titleText = $titleText;
-        $this->titleImage = $titleImage;
-        $this->content = $content;
-        $this->category = $category;
-        $this->dataPublication = $dataPublication;
-    } */
-
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setId()
-    {
-        $this->id;
-    }
 
     /**
      * @ORM\ManyToOne(targetEntity="DataUser")
@@ -57,6 +30,65 @@ class DataNews
      * @ORM\JoinColumn(name="id_author", referencedColumnName="id")
      */
     private $idAuthor;
+
+    /**
+     * @ORM\Column(name="title_text",type="string", length = 128)
+     * @Assert\NotBlank()
+     */
+    private $titleText;
+
+    /**
+     * @ORM\Column(name="title_image",type="string")
+     * @Assert\Image(mimeTypes={ "image/*" })
+     */
+    private $titleImage;
+
+    /**
+     * @ORM\Column(name="content",type="string")
+     * @Assert\NotBlank()
+     */
+    private $content;
+
+    /**
+     * @ORM\Column(name="category",type="string")
+     */
+    private $category;
+
+    /**
+     * @ORM\Column(name="date",type="datetime")
+     * @Assert\NotBlank()
+     */
+    private $dataPublication;
+
+    /**
+     * @ORM\Column(name="view_count",type="integer")
+     * @Assert\NotBlank()
+     */
+    private $viewCount = 0;
+
+    /*public function __construct(
+        int $idAuthor,
+        string $titleText,
+        string $titleImage,
+        string $content,
+        string $category,
+        $dataPublication,
+        int $viewCount
+    )
+    {
+        $this->idAuthor = $idAuthor;
+        $this->titleText = $titleText;
+        $this->titleImage = $titleImage;
+        $this->content = $content;
+        $this->category = $category;
+        $this->dataPublication = $dataPublication;
+        $this->viewCount = $viewCount;
+    }*/
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function getIdAuthor()
     {
@@ -68,12 +100,6 @@ class DataNews
         $this->idAuthor = $idAuthor;
     }
 
-    /**
-     * @ORM\Column(name="title_text",type="string", length = 128)
-     * @Assert\NotBlank()
-     */
-    private $titleText;
-
     public function getTitleText()
     {
         return $this->titleText;
@@ -83,12 +109,6 @@ class DataNews
     {
         $this->titleText = $titleText;
     }
-
-    /**
-     * @ORM\Column(name="title_image",type="string")
-     * @Assert\Image(mimeTypes={ "image/*" })
-     */
-    private $titleImage;
 
     public function getTitleImage()
     {
@@ -100,12 +120,6 @@ class DataNews
         $this->titleImage = $titleImage;
     }
 
-    /**
-     * @ORM\Column(name="content",type="string")
-     * @Assert\NotBlank()
-     */
-    private $content;
-
     public function getContent()
     {
         return $this->content;
@@ -116,12 +130,6 @@ class DataNews
         $this->content = $content;
     }
 
-    /**
-     * @ORM\Column(name="category",type="string")
-     * 
-     */
-    private $category;
-
     public function getCategory()
     {
         return $this->category;
@@ -129,14 +137,8 @@ class DataNews
 
     public function setCategory(string $category)
     {
-        $this->titleImage = $category;
+        $this->category = $category;
     }
-
-    /**
-     * @ORM\Column(name="date",type="datetime")
-     * @Assert\NotBlank()
-     */
-    private $dataPublication;
 
     public function getDataPublication()
     {
@@ -148,14 +150,12 @@ class DataNews
         $this->dataPublication = $dataPublication;
     }
 
-    private $viewCount = 0;
-
     public function getViewCount()
     {
         return $this->viewCount;
     }
 
-    public function setViewCount($count)
+    public function setViewCount(int $count)
     {
         $this->viewCount = $count;
     }
