@@ -24,36 +24,32 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 class UserController extends Controller
 {
     /**
-     * @Route("/getUsers", name="getUsers")
+     * @Route("/getGrid/{countUsersPage}/{indexPage}", name="getUsers")
      */
-    public function getJsonUsersAction(Request $request)
+    public function getJsonGridAction(
+        Request $request,
+        int $countUsersPage = 20,
+        int $indexPage = 1
+    )
     {
         /*$news = $this->getDoctrine()->getRepository('AppBundle:DataUser')
             ->findAll();*/
         $user = new DataUser();
-        $user->setUserName('Kolya');
+        $user->setFirstName('Kolya');
         $user->setLastName('Bobrov');
         $users = array($user, $user, $user, $user);
+        $countPage = 10;
+        $url = 'http://localhost:8000/getGrid';
+        $data = array($users, $countPage, $url);
         $encoders = array(new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
-        $users = $serializer->serialize($users, 'json');
-        return new Response($users);
+        $data = $serializer->serialize($data, 'json');
+        return new Response($data);
     }
 
     /**
-     * @Route("/getCountPage", name="getCountPage")
-     * FIX!!!!!
-     */
-    public function getCountPage(Request $request)
-    {
-        $countUsersPage = $request->get('count');
-        $countUsersDB = 123;
-        return new Response($countUsersDB / $countUsersPage);
-    }
-
-    /**
-     * @Route("/grid", name="news")
+     * @Route("/grid", name="grid")
      */
     public function adminGridAction(Request $request)
     {
