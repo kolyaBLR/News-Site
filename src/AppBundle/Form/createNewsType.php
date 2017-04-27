@@ -6,6 +6,7 @@ use AppBundle\Entity\DataNews;
 use AppBundle\Entity\NewsCategory;
 use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -25,10 +26,11 @@ class createNewsType extends AbstractType
                 'choice_label' => 'category',
             ))
             ->add('titleText', TextType::class)
-            ->add('content', TextType::class);
+            ->add('content', TextareaType::class);
         //->add('titleImage', FileType::class, array(
         //   'label' => 'Upload photo'));
     }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

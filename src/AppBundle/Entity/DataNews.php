@@ -24,9 +24,8 @@ class DataNews
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="DataUser")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DataUser")
      * @ORM\Column(name="id_author", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\JoinColumn(name="id_author", referencedColumnName="id")
      */
     private $idAuthor;
@@ -37,11 +36,11 @@ class DataNews
      */
     private $titleText;
 
-    /**
+    /*
      * @ORM\Column(name="title_image",type="string")
      * @Assert\Image(mimeTypes={ "image/*" })
      */
-    private $titleImage;
+    //private $titleImage;
 
     /**
      * @ORM\Column(name="content",type="string")
@@ -50,15 +49,18 @@ class DataNews
     private $content;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\NewsCategory")
      * @ORM\Column(name="category",type="string")
+     * @ORM\JoinColumn(name="category", referencedColumnName="category")
+     * @Assert\NotBlank()
      */
     private $category;
 
-    /**
+    /*
      * @ORM\Column(name="date",type="datetime")
      * @Assert\NotBlank()
      */
-    private $dataPublication;
+    //private $dataPublication;
 
     /**
      * @ORM\Column(name="view_count",type="integer")
@@ -110,7 +112,7 @@ class DataNews
         $this->titleText = $titleText;
     }
 
-    public function getTitleImage()
+   /* public function getTitleImage()
     {
         return $this->titleImage;
     }
@@ -118,7 +120,7 @@ class DataNews
     public function setTitleImage(string $titleImage)
     {
         $this->titleImage = $titleImage;
-    }
+    }*/
 
     public function getContent()
     {
@@ -135,12 +137,12 @@ class DataNews
         return $this->category;
     }
 
-    public function setCategory(string $category)
+    public function setCategory(NewsCategory $category)
     {
-        $this->category = $category;
+        $this->category = $category->getCategory();
     }
 
-    public function getDataPublication()
+    /*public function getDataPublication()
     {
         return $this->dataPublication;
     }
@@ -148,15 +150,15 @@ class DataNews
     public function setDataPublication($dataPublication)
     {
         $this->dataPublication = $dataPublication;
-    }
+    }*/
 
     public function getViewCount()
     {
         return $this->viewCount;
     }
 
-    public function setViewCount(int $count)
+    public function setViewCount()
     {
-        $this->viewCount = $count;
+        $this->viewCount += 1;
     }
 }

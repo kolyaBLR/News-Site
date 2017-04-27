@@ -57,9 +57,10 @@ class AuthenticationOfController extends Controller
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $em = $this->getDoctrine()->getManager();
+            var_dump($user);
             $em->persist($user);
             $em->flush();
-            $name = $user->getFirstName() + ' ' + $user->getLastName();
+            $name = $user->getFirstName() . ' ' . $user->getLastName();
             $userEmail = $user->getEmail();
             return $this->redirectToRoute('email', array(
                'name' =>  "$name",

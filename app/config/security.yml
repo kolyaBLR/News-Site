@@ -42,5 +42,5 @@ security:
 
     access_control:
          #- {path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - {path: ^/news/create, roles: ROLE_MANAGER}
+         #- {path: ^/news/create, roles: ROLE_MANAGER}
          #- {path: ^/admin, roles: ROLE_ADMIN }
