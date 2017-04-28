@@ -52,7 +52,7 @@ class DataUser implements AdvancedUserInterface
     /**
      * @ORM\Column(name="access_level", type="string", length = 32);
      */
-    private $roles = ['ROLE_USER'];
+    private $roles = 'ROLE_USER';
 
     /**
      * @ORM\Column(name="subscription_email", type="boolean");
@@ -142,12 +142,12 @@ class DataUser implements AdvancedUserInterface
 
     public function getRoles()
     {
-        return [$this->roles];
+        return $this->roles;
     }
 
     public function setRoles($roles)
     {
-        $this->roles = [$roles];
+        $this->roles = $roles;
     }
 
     public function getSalt()

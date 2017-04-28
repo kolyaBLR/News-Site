@@ -21,11 +21,11 @@ class RegistrationType extends AbstractType
             ->add('email', EmailType::class)
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                /*'invalid_message' => 'The password fields must match.',
                 'options' => array('attr' => array('class' => 'password-field')),
                 'required' => true,
                 'first_options' => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
+                'second_options' => array('label' => 'Repeat Password'),*/
             ));
     }
 
