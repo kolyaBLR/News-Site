@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="data_user")
  * @UniqueEntity(fields="email", message="This email is already used")
  */
-class DataUser implements AdvancedUserInterface
+class DataUser
 {
     /**
      * @ORM\Column(name="id", type="integer", unique=true)
@@ -20,6 +20,11 @@ class DataUser implements AdvancedUserInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\Column(name="id_role", type="integer")
+     */
+    private $idRole;
 
     /**
      * @ORM\Column(name="last_name",type="string", length = 128)
@@ -50,11 +55,6 @@ class DataUser implements AdvancedUserInterface
     private $email;
 
     /**
-     * @ORM\Column(name="access_level", type="string", length = 32);
-     */
-    private $roles = 'ROLE_USER';
-
-    /**
      * @ORM\Column(name="subscription_email", type="boolean");
      */
     private $subscriptionEmail = true;
@@ -83,6 +83,16 @@ class DataUser implements AdvancedUserInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getIdRole()
+    {
+        return $this->idRole;
+    }
+
+    public function setIdRole($idRole)
+    {
+        $this->idRole = $idRole;
     }
 
     public function getFirstName()
@@ -135,30 +145,6 @@ class DataUser implements AdvancedUserInterface
         $this->email = $email;
     }
 
-    public function getUsername()
-    {
-        return $this->email;
-    }
-
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-    }
-
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
     public function getSubscriptionEmail()
     {
         return $this->subscriptionEmail;
@@ -167,35 +153,5 @@ class DataUser implements AdvancedUserInterface
     public function setSubscriptionEmail(bool $subscriptionEmail = true)
     {
         $this->subscriptionEmail = $subscriptionEmail;
-    }
-
-    public function isAccountNonExpired()
-    {
-        return $this->enabled;
-    }
-
-    public function isAccountNonLocked()
-    {
-        return $this->enabled;
-    }
-
-    public function isCredentialsNonExpired()
-    {
-        return $this->enabled;
-    }
-
-    public function isEnabled()
-    {
-        return $this->enabled;
-    }
-
-    public function setEnabled(bool $enabled)
-    {
-        $this->enabled = $enabled;
-    }
-
-    public function getEnabled()
-    {
-        return $this->enabled;
     }
 }
