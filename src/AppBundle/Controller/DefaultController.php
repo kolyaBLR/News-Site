@@ -32,16 +32,4 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..') . DIRECTORY_SEPARATOR,
         ]);
     }
-
-
-    /**
-     * @Route("/test")
-     */
-    public function getUsersAction(Request $request)
-    {
-        $token = $this->getDoctrine()
-            ->getRepository('AppBundle:TokenUser')
-            ->getTokenSearchByEmail("bk97w@bk.ru");
-        return new Response(var_dump($token));
-    }
 }

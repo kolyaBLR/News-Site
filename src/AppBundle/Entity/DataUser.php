@@ -10,9 +10,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
  * @ORM\Table(name="data_user")
- * @UniqueEntity(fields="email", message="This email is already used")
  */
-class DataUser
+class DataUser implements AdvancedUserInterface
 {
     /**
      * @ORM\Column(name="id", type="integer", unique=true)
@@ -20,11 +19,6 @@ class DataUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @ORM\Column(name="id_role", type="integer")
-     */
-    private $idRole;
 
     /**
      * @ORM\Column(name="last_name",type="string", length = 128)
@@ -40,6 +34,7 @@ class DataUser
 
     /**
      * @Assert\Length(max=64)
+     * @Assert\NotBlank()
      */
     private $plainPassword;
 
@@ -50,9 +45,14 @@ class DataUser
 
     /**
      * @ORM\Column(name="email",type="string", length = 128, unique=true)
-     * @Assert\NotBlank()
      */
     private $email;
+
+    /**
+     * @ORM\Column(name="access_level", type="string", length = 32);
+     * @Assert\NotBlank()
+     */
+    private $roles = 'ROLE_USER';
 
     /**
      * @ORM\Column(name="subscription_email", type="boolean");
@@ -66,33 +66,28 @@ class DataUser
 
     public $userName;
 
-    /*public function __construct(
-        string $lastName,
-        string $firstName,
-        string $plainPassword,
-        string $password,
-        string $email,
+    public function __construct(
+        string $lastName = '1',
+        string $firstName = '1',
+        string $plainPassword = '1',
+        string $email = '',
         $roles = ['ROLE_USER'],
         bool $subscriptionEmail = true,
         bool $enabled = false
     )
     {
-
-    }*/
+        $this->lastName = $lastName;
+        $this->firstName = $firstName;
+        $this->plainPassword = $plainPassword;
+        $this->email = $email;
+        $this->roles = $roles;
+        $this->subscriptionEmail = $subscriptionEmail;
+        $this->enabled = $enabled;
+    }
 
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getIdRole()
-    {
-        return $this->idRole;
-    }
-
-    public function setIdRole($idRole)
-    {
-        $this->idRole = $idRole;
     }
 
     public function getFirstName()
@@ -145,6 +140,30 @@ class DataUser
         $this->email = $email;
     }
 
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function getRoles()
+    {
+        return [$this->roles];
+    }
+
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
     public function getSubscriptionEmail()
     {
         return $this->subscriptionEmail;
@@ -153,5 +172,35 @@ class DataUser
     public function setSubscriptionEmail(bool $subscriptionEmail = true)
     {
         $this->subscriptionEmail = $subscriptionEmail;
+    }
+
+    public function isAccountNonExpired()
+    {
+        return $this->enabled;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return $this->enabled;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return $this->enabled;
+    }
+
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled)
+    {
+        $this->enabled = $enabled;
+    }
+
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

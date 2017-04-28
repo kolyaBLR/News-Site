@@ -36,7 +36,23 @@ class AuthenticationOfController extends Controller
      */
     public function passwordResetAction(Request $request)
     {
-        $form = $this->createForm(PasswordResetType::class, new DataUser());
+        $user = new DataUser();
+        $form = $this->createForm(PasswordResetType::class, $user);
+        $user = $this->getDoctrine()
+            ->getRepository('AppBundle:TokenUser')
+            ->getTokenSearchByEmail($user->getEmail());
+        $form->handleRequest($request);
+        if ($user) {
+            $userServer = $this->getDoctrine()
+                ->getRepository('AppBundle:TokenUser')
+                ->getTokenSearchByEmail($user->getEmail());
+            $name = $user->getFirstName() . ' ' . $user->getLastName();
+            $userEmail = $userServer->getEmail();
+            return $this->redirectToRoute('email', array(
+                'name' => "$name",
+                'email' => "$userEmail"
+            ));
+        }
         return $this->render('authorize/passwordReset.html.twig', array(
             'form' => $form->createView(),
         ));
@@ -48,7 +64,6 @@ class AuthenticationOfController extends Controller
     public function registrationAction(Request $request)
     {
         $user = new DataUser();
-        $user->setSubscriptionEmail();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -72,9 +87,9 @@ class AuthenticationOfController extends Controller
     }
 
     /**
-     * @Route("/register/{idToken}", name="registerToken")
+     * @Route("/token/{idToken}", name="registerToken")
      */
-    public function saveUserAction(Request $request, int $idToken)
+    public function tokenActivationAction(Request $request, int $idToken)
     {
         $token = $this->getDoctrine()
             ->getRepository('AppBundle:TokenUser')
