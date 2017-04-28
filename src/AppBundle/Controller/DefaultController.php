@@ -33,4 +33,15 @@ class DefaultController extends Controller
         ]);
     }
 
+
+    /**
+     * @Route("/test")
+     */
+    public function getUsersAction(Request $request)
+    {
+        $token = $this->getDoctrine()
+            ->getRepository('AppBundle:TokenUser')
+            ->getTokenSearchByEmail("bk97w@bk.ru");
+        return new Response(var_dump($token));
+    }
 }

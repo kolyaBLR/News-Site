@@ -17,13 +17,18 @@ class EmailsController extends Controller
      */
     public function sendRegistrationEmailAction(string $name, string $email)
     {
+        $token = $this->getDoctrine()
+            ->getRepository('AppBundle:TokenUser')
+            ->getTokenSearchByEmail($email);
+        $id = $token[0]->getId();
         $message = \Swift_Message::newInstance()
             ->setSubject("Hello $name!")
             ->setFrom('bobrovkolja@gmail.com')
             ->setTo($email)
             ->setBody(
                 $this->renderView('Emails/registrationEmail.html.twig', array(
-                    'name' => $name
+                    'name' => $name,
+                    'token' => $id,
                 )),
                 'text/html'
             );

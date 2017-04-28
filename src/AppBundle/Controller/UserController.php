@@ -53,8 +53,8 @@ class UserController extends Controller
      */
     public function adminGridAction(Request $request)
     {
-        /*$news = $this->getDoctrine()->getRepository('AppBundle:DataUser')
-            ->findAll();*/
+        $news = $this->getDoctrine()->getRepository('AppBundle:DataUser')
+            ->findAll();
         return $this->render('users/index.html.twig');
     }
 }

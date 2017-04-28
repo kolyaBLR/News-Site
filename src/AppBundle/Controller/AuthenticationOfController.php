@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\DataUser;
+use AppBundle\Entity\TokenUser;
 use AppBundle\Form\AuthorizationType;
 use AppBundle\Form\PasswordResetType;
 use AppBundle\Form\RegistrationType;
@@ -28,7 +29,7 @@ class AuthenticationOfController extends Controller
 
         return $this->render('authorize/login.html.twig', array(
             'last_username' => $lastUsername,
-            'error'         => $error,
+            'error' => $error,
         ));
     }
 
@@ -57,18 +58,41 @@ class AuthenticationOfController extends Controller
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $em = $this->getDoctrine()->getManager();
-            var_dump($user);
             $em->persist($user);
+            $em->persist(new TokenUser($user->getEmail()));
             $em->flush();
             $name = $user->getFirstName() . ' ' . $user->getLastName();
             $userEmail = $user->getEmail();
             return $this->redirectToRoute('email', array(
-               'name' =>  "$name",
-               'email' => "$userEmail"
-           ));
+                'name' => "$name",
+                'email' => "$userEmail"
+            ));
         }
         return $this->render('authorize/registrations.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @Route("/register/{idToken}", name="registerToken")
+     */
+    public function saveUserAction(Request $request, int $idToken)
+    {
+        $token = $this->getDoctrine()
+            ->getRepository('AppBundle:TokenUser')
+            ->find($idToken);
+        if ($token) {
+            $user = $this->getDoctrine()
+                ->getRepository('AppBundle:DataUser')
+                ->getUserSearchByEmail($token->getEmail());
+            if ($user) {
+                $user[0]->setEnabled(true);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user[0]);
+                $em->remove($token);
+                $em->flush();
+            }
+        }
+        return $this->redirectToRoute('main');
     }
 }
