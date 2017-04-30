@@ -27,10 +27,10 @@ class NewsController extends Controller
     {
         $news = new DataNews();
         $form = $this->createForm(createNewsType::class, $news);
+        $news->setDatePublication(new \DateTime('now'));
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $news->setIdAuthor($this->getUser()->getId());
-            $news->setDatePublication(new \DateTime('tomorrow'));
             $saveNews = $this->getDoctrine()->getManager();
             $saveNews->persist($news);
             $saveNews->flush();
