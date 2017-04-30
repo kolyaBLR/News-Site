@@ -73,12 +73,13 @@
                 <a href="news/{{ news.id }}"> продолжение</a></br></br>
                 <p>
                     author: {{ news.firstName }} {{ news.lastName }}</br>
-                    data: {{ news.datePublication }}</br>
+                    {#data: {{ news.datePublication }}</br>#}
                     category: {{ news.category }}
                 </p>
             </span>
         </div>
         {% endfor %}
     </div>
+COUNT: {{ countPage }}
 </body>
 </html>

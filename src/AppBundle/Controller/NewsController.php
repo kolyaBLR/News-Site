@@ -49,9 +49,12 @@ class NewsController extends Controller
             ->getNewsSearchByIndexPage($page);
         $categories = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
             ->findAll();
+        $countPage = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+            ->getCountNews();
         return $this->render('news/news.html.twig', array(
             'News' => $news,
             'categories' => $categories,
+            'countPage' => $countPage,
         ));
     }
 
