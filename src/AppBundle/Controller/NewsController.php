@@ -27,7 +27,9 @@ class NewsController extends Controller
     {
         $news = new DataNews();
         $form = $this->createForm(createNewsType::class, $news);
-        $news->setDatePublication(new \DateTime('now'));
+        $dateTime = new \DateTime('now');
+        $dateTime = $dateTime->format("Y-m-d");
+        $news->setDatePublication($dateTime);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $news->setIdAuthor($this->getUser()->getId());

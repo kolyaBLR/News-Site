@@ -50,8 +50,8 @@ class DataNews
     private $category;
 
     /**
-     * @ORM\Column(name="date",type="datetime")
-     * @Assert\Type("\DateTime")
+     * @ORM\Column(name="date",type="string", length = 64)
+     *
      * @Assert\NotBlank()
      */
     private $datePublication;
@@ -128,6 +128,7 @@ class DataNews
 
     public function getDatePublication()
     {
+
         return $this->datePublication;
     }
 
