@@ -67,9 +67,9 @@ class DataUser implements AdvancedUserInterface
     public $userName;
 
     public function __construct(
-        string $lastName = '1',
-        string $firstName = '1',
-        string $plainPassword = '1',
+        string $lastName = '',
+        string $firstName = '',
+        string $plainPassword = '',
         string $email = '',
         $roles = 'ROLE_USER',
         bool $subscriptionEmail = true,

@@ -9,7 +9,7 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
         $countNews = ($page - 1) * 5;
         return $this->getEntityManager()
             ->createQuery("
-              SELECT n.id, n.category, n.titleText, n.content, u.firstName, u.lastName
+              SELECT n.id, n.category, n.titleText, n.content, u.firstName, u.lastName, n.datePublication
               FROM AppBundle:DataUser u INNER JOIN AppBundle:DataNews n
               WITH n.idAuthor = u.id")
             ->setMaxResults(5)
@@ -21,11 +21,16 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
         $countNews = ($page - 1) * 5;
         return $this->getEntityManager()
             ->createQuery("
-              SELECT n.id, n.category, n.titleText, n.content, u.firstName, u.lastName
+              SELECT n.id, n.category, n.titleText, n.content, u.firstName, u.lastName, n.datePublication
               FROM AppBundle:DataUser u INNER JOIN AppBundle:DataNews n
               WITH n.idAuthor = u.id
               WHERE n.category = '$category'")
             ->setMaxResults(5)
             ->setFirstResult($countNews)->getResult();
+    }
+
+    public function getCountNews()
+    {
+
     }
 }
