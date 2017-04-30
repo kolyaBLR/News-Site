@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
  * @ORM\Table(name="data_user")
+ * @UniqueEntity(fields="email", message="This email is already used")
  */
 class DataUser implements AdvancedUserInterface
 {
@@ -67,9 +68,9 @@ class DataUser implements AdvancedUserInterface
     public $userName;
 
     public function __construct(
-        string $lastName,
-        string $firstName,
-        string $plainPassword,
+        string $lastName = '',
+        string $firstName = '',
+        string $plainPassword = '',
         string $email = '',
         $roles = 'ROLE_USER',
         bool $subscriptionEmail = true,

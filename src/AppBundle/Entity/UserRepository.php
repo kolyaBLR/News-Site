@@ -10,8 +10,9 @@ class UserRepository extends EntityRepository
 {
     public function getUserSearchByEmail($email)
     {
-        return $this->getEntityManager()
+         $user = $this->getEntityManager()
             ->createQuery("SELECT p FROM AppBundle:DataUser p WHERE p.email = '$email'")
             ->getResult();
+        return $user[0];
     }
 }

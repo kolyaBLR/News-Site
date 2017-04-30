@@ -6,7 +6,7 @@ use AppBundle\AppBundle;
 use AppBundle\Entity\DataNews;
 use AppBundle\Entity\DataUser;
 use AppBundle\Entity\NewsCategory;
-use AppBundle\Form\createNewsType;
+use AppBundle\Form\newsCreateType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,7 @@ class NewsController extends Controller
     public function createNewsAction(Request $request)
     {
         $news = new DataNews();
-        $form = $this->createForm(createNewsType::class, $news);
+        $form = $this->createForm(newsCreateType::class, $news);
         $dateTime = new \DateTime('now');
         $dateTime = $dateTime->format("Y-m-d");
         $news->setDatePublication($dateTime);

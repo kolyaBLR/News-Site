@@ -6,8 +6,8 @@ use AppBundle\Entity\DataNews;
 use AppBundle\Entity\DataUser;
 use AppBundle\Entity\UserRepository;
 use AppBundle\Form\AuthorizationType;
-use AppBundle\Form\createNewsType;
-use AppBundle\Form\PasswordResetType;
+use AppBundle\Form\newsCreateType;
+use AppBundle\Form\PasswordResetEmailType;
 use AppBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -34,11 +34,27 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/testuser")
+     * @Route("/test/{idToken}")
      */
-    public  function getIdUser()
+    public function tokenActivationAction(Request $request, int $idToken)
     {
-        $id = $this->getUser()->getId();
-        return new Response($id);
+        $token = $this->getDoctrine()
+            ->getRepository('AppBundle:TokenUser')
+            ->find($idToken);
+        if ($token) {
+            $user = $this->getDoctrine()
+                ->getRepository('AppBundle:DataUser')
+                ->getUserSearchByEmail($token->getEmail());
+            if ($user) {
+                $user[0]->setEnabled(true);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user[0]);
+                $em->remove($token);
+                $em->flush();
+            }
+        }
+        return new Response(var_dump($token) . var_dump($user));
+        //return $this->redirectToRoute('login');
     }
+
 }

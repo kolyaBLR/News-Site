@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\DataUser;
 use AppBundle\Entity\TokenUser;
 use AppBundle\Form\AuthorizationType;
+use AppBundle\Form\PasswordResetEmailType;
 use AppBundle\Form\PasswordResetType;
 use AppBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -32,35 +33,6 @@ class AuthenticationOfController extends Controller
     }
 
     /**
-     * @Route("/passwres")
-     */
-    public function passwordResetAction(Request $request)
-    {
-        $user = new DataUser();
-        $form = $this->createForm(PasswordResetType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            $user = $this->getDoctrine()
-                ->getRepository('AppBundle:DataUser')
-                ->getUserSearchByEmail($user->getEmail());
-            if ($user) {
-                $userServer = $this->getDoctrine()
-                    ->getRepository('AppBundle:TokenUser')
-                    ->getTokenSearchByEmail($user->getEmail());
-                $name = $user->getFirstName() . ' ' . $user->getLastName();
-                $userEmail = $userServer->getEmail();
-                return $this->redirectToRoute('email', array(
-                    'name' => "$name",
-                    'email' => "$userEmail",
-                ));
-            }
-            return $this->render('authorize/passwordReset.html.twig', array(
-                'form' => $form->createView(),
-            ));
-        }
-    }
-
-    /**
      * @Route("/register", name="registration")
      */
     public function registrationAction(Request $request)
@@ -78,9 +50,9 @@ class AuthenticationOfController extends Controller
             $em->flush();
             $name = $user->getFirstName() . ' ' . $user->getLastName();
             $userEmail = $user->getEmail();
-            return $this->redirectToRoute('email', array(
+            return $this->redirectToRoute('emailActivation', array(
                 'name' => "$name",
-                'email' => "$userEmail"
+                'email' => "$userEmail",
             ));
         }
         return $this->render('authorize/registrations.html.twig', array(
@@ -101,13 +73,77 @@ class AuthenticationOfController extends Controller
                 ->getRepository('AppBundle:DataUser')
                 ->getUserSearchByEmail($token->getEmail());
             if ($user) {
-                $user[0]->setEnabled(true);
+                $user->setEnabled(true);
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($user[0]);
+                $em->persist($user);
                 $em->remove($token);
                 $em->flush();
             }
         }
-        return $this->redirectToRoute('login');
+        $message = 'Accaunt activated.';
+        return $this->render('authorize/successMessage.html.twig', array(
+            'message' => $message,
+        ));
+    }
+
+    /**
+     * @Route("/passwres")
+     */
+    public function passwordResetAction(Request $request)
+    {
+        $user = new DataUser();
+        $form = $this->createForm(PasswordResetEmailType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $user = $this->getDoctrine()
+                ->getRepository('AppBundle:DataUser')
+                ->getUserSearchByEmail($user->getEmail());
+            if ($user) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist(new TokenUser($user->getEmail()));
+                $em->flush();
+                $name = $user->getFirstName() . ' ' . $user->getLastName();
+                $userEmail = $user->getEmail();
+                return $this->redirectToRoute('emailPasswordReset', array(
+                    'name' => "$name",
+                    'email' => "$userEmail",
+                ));
+            }
+        }
+        return $this->render('authorize/passwordReset.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/passwres/{idToken}", name="passwordResetToken")
+     */
+    public function tokenPasswordResetAction(Request $request, int $idToken)
+    {
+        $user = new DataUser();
+        $form = $this->createForm(PasswordResetType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $token = $this->getDoctrine()
+                ->getRepository('AppBundle:TokenUser')
+                ->find($idToken);
+            if ($token) {
+                $user = $this->getDoctrine()
+                    ->getRepository('AppBundle:DataUser')
+                    ->getUserSearchByEmail($token->getEmail());
+                if ($user) {
+                    $password = $this->get('security.password_encoder')
+                        ->encodePassword($user, $user->getPlainPassword());
+                    $user->setPassword($password);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($user);
+                    $em->remove($token);
+                    $em->flush();
+                }
+            }
+        }
+        return $this->render('authorize/passwordReset.html.twig', array(
+            'form' => $form,
+        ));
     }
 }
