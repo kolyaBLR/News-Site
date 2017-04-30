@@ -56,23 +56,23 @@
 </head>
 <body>
         <ul class="menu">
-            <li><a href="{{ url('main') }}">Home</a></li>
+            <li><a href="{{ url('news') }}">Home</a></li>
             {% for category in categories %}
-                <li><a href="#">{{ category.category }}</a></li>
+                <li><a href="{{ path('newsCategory', {'category': category.category, 'page' : 1 }) }}">
+                        {{ category.category }}
+                    </a>
+                </li>
             {% endfor %}
         </ul>
     <div>
         {% for news in News %}
         <div class="newsid">
             <h2 class="text-center"><a href="#">{{ news.titleText }}</a></h2>
-            <a href="#">
-                {#<img class="sizeImage" src="{{ news.titleImage }}">#}
-            </a>
             <span>
                 {{ news.content }}
                 <a href="news/{{ news.id }}"> продолжение</a></br></br>
                 <p>
-                    author: {{ user.firstName }} {{ user.lastName }}</br>
+                    author: {{ news.firstName }} {{ news.lastName }}</br>
                     {#data: {{ news.dataPublication }}</br>#}
                     category: {{ news.category }}
                 </p>

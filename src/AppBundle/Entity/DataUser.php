@@ -71,7 +71,7 @@ class DataUser implements AdvancedUserInterface
         string $firstName = '1',
         string $plainPassword = '1',
         string $email = '',
-        $roles = ['ROLE_USER'],
+        $roles = 'ROLE_USER',
         bool $subscriptionEmail = true,
         bool $enabled = false
     )

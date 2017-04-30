@@ -26,7 +26,6 @@ class DataNews
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DataUser")
      * @ORM\Column(name="id_author", type="integer")
-     * @ORM\JoinColumn(name="id_author", referencedColumnName="id")
      */
     private $idAuthor;
 
@@ -35,12 +34,6 @@ class DataNews
      * @Assert\NotBlank()
      */
     private $titleText;
-
-    /*
-     * @ORM\Column(name="title_image",type="string")
-     * @Assert\Image(mimeTypes={ "image/*" })
-     */
-    //private $titleImage;
 
     /**
      * @ORM\Column(name="content",type="string")
@@ -56,11 +49,12 @@ class DataNews
      */
     private $category;
 
-    /*
+    /**
      * @ORM\Column(name="date",type="datetime")
+     * @Assert\Type("\DateTime")
      * @Assert\NotBlank()
      */
-    //private $dataPublication;
+    private $datePublication;
 
     /**
      * @ORM\Column(name="view_count",type="integer")
@@ -112,16 +106,6 @@ class DataNews
         $this->titleText = $titleText;
     }
 
-   /* public function getTitleImage()
-    {
-        return $this->titleImage;
-    }
-
-    public function setTitleImage(string $titleImage)
-    {
-        $this->titleImage = $titleImage;
-    }*/
-
     public function getContent()
     {
         return $this->content;
@@ -142,15 +126,15 @@ class DataNews
         $this->category = $category->getCategory();
     }
 
-    /*public function getDataPublication()
+    public function getDatePublication()
     {
-        return $this->dataPublication;
+        return $this->datePublication;
     }
 
-    public function setDataPublication($dataPublication)
+    public function setDatePublication($datePublication)
     {
-        $this->dataPublication = $dataPublication;
-    }*/
+        $this->datePublication = $datePublication;
+    }
 
     public function getViewCount()
     {

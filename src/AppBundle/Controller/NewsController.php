@@ -29,6 +29,8 @@ class NewsController extends Controller
         $form = $this->createForm(createNewsType::class, $news);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $news->setIdAuthor($this->getUser()->getId());
+            $news->setDatePublication(new \DateTime('tomorrow'));
             $saveNews = $this->getDoctrine()->getManager();
             $saveNews->persist($news);
             $saveNews->flush();
@@ -39,34 +41,32 @@ class NewsController extends Controller
     }
 
     /**
-     * @Route("/news", name="news")
+     * @Route("/news/{page}", name="news")
      */
-    public function viewTitleNewsAction(Request $request)
+    public function viewTitleNewsAction(Request $request, int $page = 1)
     {
         $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
-            ->findAll();
+            ->getNewsSearchByIndexPage($page);
         $categories = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
-            ->findAll();
-        $user = $this->getDoctrine()->getRepository('AppBundle:DataUser')
             ->findAll();
         return $this->render('news/news.html.twig', array(
             'News' => $news,
-            'user' => $user,
             'categories' => $categories,
         ));
     }
 
     /**
-     * @Route("/news/{id}")
-     * @ParamConverter("post", class="AppBundle:DataNews")
+     * @Route("/news/category/{category}/{page}", name="newsCategory")
      */
-    public function viewNewsAction(DataNews $newsId)
+    public function viewTitleNewsCategoryAction(Request $request, string $category, int $page = 1)
     {
         $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
-            ->find($newsId);
-        if (!$newsId) {
-            throw $this->createNotFoundException('Not found by ID ' .$newsId);
-        }
-        return new Response($news);
+            ->getNewsSearchByCategory($page, $category);
+        $categories = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
+            ->findAll();
+        return $this->render('news/news.html.twig', array(
+            'News' => $news,
+            'categories' => $categories,
+        ));
     }
 }

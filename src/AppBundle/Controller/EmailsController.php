@@ -35,4 +35,25 @@ class EmailsController extends Controller
         $this->get('mailer')->send($message);
         return $this->redirectToRoute('login');
     }
+
+    /**
+     * @Route("/email/cron/{name}/{email}", name="cronEmail")
+     */
+    public function cronEmailAction(string $name, string $email)
+    {
+        $id = 213;
+        $message = \Swift_Message::newInstance()
+            ->setSubject("Hello $name!")
+            ->setFrom('bobrovkolja@gmail.com')
+            ->setTo($email)
+            ->setBody(
+                $this->renderView('Emails/registrationEmail.html.twig', array(
+                    'name' => $name,
+                    'token' => $id,
+                )),
+                'text/html'
+            );
+        $this->get('mailer')->send($message);
+        return $this->redirectToRoute('login');
+    }
 }

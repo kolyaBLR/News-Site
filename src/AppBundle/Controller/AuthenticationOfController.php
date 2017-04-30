@@ -106,6 +106,6 @@ class AuthenticationOfController extends Controller
                 $em->flush();
             }
         }
-        return $this->redirectToRoute('main');
+        return $this->redirectToRoute('login');
     }
 }
