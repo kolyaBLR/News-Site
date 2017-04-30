@@ -31,8 +31,8 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
 
     public function getCountNews()
     {
-        return $this->getEntityManager()
+        return $count = $this->getEntityManager()
             ->createQuery("SELECT count (n) FROM AppBundle:DataNews n")
-            ->getResult()[0][1];
+            ->getResult()[0][1] / 5;
     }
 }
