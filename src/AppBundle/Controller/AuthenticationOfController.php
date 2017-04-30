@@ -38,24 +38,26 @@ class AuthenticationOfController extends Controller
     {
         $user = new DataUser();
         $form = $this->createForm(PasswordResetType::class, $user);
-        $user = $this->getDoctrine()
-            ->getRepository('AppBundle:TokenUser')
-            ->getTokenSearchByEmail($user->getEmail());
         $form->handleRequest($request);
-        if ($user) {
-            $userServer = $this->getDoctrine()
-                ->getRepository('AppBundle:TokenUser')
-                ->getTokenSearchByEmail($user->getEmail());
-            $name = $user->getFirstName() . ' ' . $user->getLastName();
-            $userEmail = $userServer->getEmail();
-            return $this->redirectToRoute('email', array(
-                'name' => "$name",
-                'email' => "$userEmail"
+        if ($form->isSubmitted()) {
+            $user = $this->getDoctrine()
+                ->getRepository('AppBundle:DataUser')
+                ->getUserSearchByEmail($user->getEmail());
+            if ($user) {
+                $userServer = $this->getDoctrine()
+                    ->getRepository('AppBundle:TokenUser')
+                    ->getTokenSearchByEmail($user->getEmail());
+                $name = $user->getFirstName() . ' ' . $user->getLastName();
+                $userEmail = $userServer->getEmail();
+                return $this->redirectToRoute('email', array(
+                    'name' => "$name",
+                    'email' => "$userEmail",
+                ));
+            }
+            return $this->render('authorize/passwordReset.html.twig', array(
+                'form' => $form->createView(),
             ));
         }
-        return $this->render('authorize/passwordReset.html.twig', array(
-            'form' => $form->createView(),
-        ));
     }
 
     /**
