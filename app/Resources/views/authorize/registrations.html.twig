@@ -19,12 +19,7 @@
 <body>
 <div class="container">
     <div class="row main">
-        <div class="panel-heading">
-            <div class="panel-title text-center">
-                <h1 class="title">Company Name</h1>
-                <hr/>
-            </div>
-        </div>
+      
         <div class="main-login main-center">
             <form class="form-horizontal" method="post" action="{{ path('registration') }}" role="form">
 
@@ -86,7 +81,7 @@
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 
                              <input type="password" class="form-control" name="registration[plainPassword][second]" id="registration_plainPassword_second" required="required"
-                                   placeholder="Confirm your Password"/>
+                                   placeholder="Confirm your Password"/> {{ form_errors(form.plainPassword) }}
                         </div>
                     </div>
                 </div>
@@ -97,7 +92,6 @@
                 <div class="login-register">
                     <a href="{{ path('login') }}">Login</a>
                 </div>
-
                 {{ form_row(form._token) }}
             </form>
         </div>

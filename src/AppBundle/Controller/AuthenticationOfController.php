@@ -88,7 +88,7 @@ class AuthenticationOfController extends Controller
     }
 
     /**
-     * @Route("/passwres")
+     * @Route("/passwres", name="password")
      */
     public function passwordResetAction(Request $request)
     {
