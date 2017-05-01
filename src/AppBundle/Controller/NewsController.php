@@ -72,20 +72,25 @@ class NewsController extends Controller
     }
 
     /**
-     * @Route("/news/{page}", name="news")
+     * @Route("/news", name="news")
      */
     public function viewTitleNewsAction(Request $request, int $page = 1)
     {
-        $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+        $newsPost = $this->getDoctrine()->getRepository('AppBundle:DataNews')
             ->getNewsSearchByIndexPageCategory($page);
         $categories = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
             ->findAll();
-        $countPage = $this->getDoctrine()->getRepository('AppBundle:DataNews')
-            ->getCountPage();
+        $paginator = $this->get('knp_paginator');
+        $news = $paginator->paginate(
+            $newsPost,
+            $request->query->getInt('page',1),
+            $request->query->getInt('limit',5)
+        );
+
         return $this->render('news/news.html.twig', array(
             'News' => $news,
             'categories' => $categories,
-            'countPage' => $countPage,
+
         ));
     }
 

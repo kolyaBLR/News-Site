@@ -15,7 +15,7 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
               FROM AppBundle:DataUser u INNER JOIN AppBundle:DataNews n
               WITH n.idAuthor = u.id
               WHERE $category n.idAuthor = u.id")
-            ->setMaxResults(5)
+           // ->setMaxResults(5)
             ->setFirstResult($countNews)->getResult();
     }
 
