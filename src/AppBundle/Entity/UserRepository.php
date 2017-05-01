@@ -15,4 +15,13 @@ class UserRepository extends EntityRepository
             ->getResult();
         return $user[0];
     }
+
+    public function getUserSubscriptionEmail()
+    {
+        return $this->getEntityManager()
+            ->createQuery("SELECT u.firstName, u.lastName, u.email
+              FROM AppBundle:DataUser u
+              WHERE u.subscriptionEmail = TRUE")
+            ->getResult();
+    }
 }

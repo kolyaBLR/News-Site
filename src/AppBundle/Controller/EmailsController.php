@@ -36,6 +36,7 @@ class EmailsController extends Controller
         $message = 'Email for account activation sent to e-mail.';
         return $this->render('authorize/successMessage.html.twig', array(
             'message' => $message,
+            'routName' => 'login',
         ));
     }
 
@@ -63,27 +64,32 @@ class EmailsController extends Controller
         $message = 'The letter with the link to password recovery sent to the mail.';
         return $this->render('authorize/successMessage.html.twig', array(
             'message' => $message,
+            'routName' => 'login',
         ));
     }
 
     /**
-     * @Route("/email/cron/{name}/{email}", name="cronEmail")
+     * @Route("/email/cron/", name="cronEmail")
      */
-    public function cronEmailAction(string $name, string $email)
+    public function cronEmailAction()
     {
-        $id = 213;
-        $message = \Swift_Message::newInstance()
-            ->setSubject("Hello $name!")
-            ->setFrom('bobrovkolja@gmail.com')
-            ->setTo($email)
-            ->setBody(
-                $this->renderView('Emails/registrationEmail.html.twig', array(
-                    'name' => $name,
-                    'token' => $id,
-                )),
-                'text/html'
-            );
-        $this->get('mailer')->send($message);
+        $User = $this->getDoctrine()
+            ->getRepository('AppBundle:DataUser')
+            ->getUserSubscriptionEmail();
+        foreach ($User as $user) {
+            $name = $user['firstName'] . ' ' . $user['lastName'];
+            $message = \Swift_Message::newInstance()
+                ->setSubject("Hello $name!")
+                ->setFrom('bobrovkolja@gmail.com')
+                ->setTo($user['email'])
+                ->setBody(
+                    $this->renderView('Emails/sendingMessages.html.twig', array(
+                        'name' => $name,
+                    )),
+                    'text/html'
+                );
+            $this->get('mailer')->send($message);
+        }
         return $this->redirectToRoute('login');
     }
 }

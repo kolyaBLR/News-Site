@@ -38,6 +38,11 @@ class NewsController extends Controller
             $saveNews = $this->getDoctrine()->getManager();
             $saveNews->persist($news);
             $saveNews->flush();
+            $message = 'New created.';
+            return $this->render('authorize/successMessage.html.twig', array(
+                'message' => $message,
+                'routName' => 'news',
+            ));
         }
         return $this->render('news/createNews.html.twig', array(
             'form' => $form->createView(),
