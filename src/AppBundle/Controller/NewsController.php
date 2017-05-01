@@ -6,6 +6,7 @@ use AppBundle\AppBundle;
 use AppBundle\Entity\DataNews;
 use AppBundle\Entity\DataUser;
 use AppBundle\Entity\NewsCategory;
+use AppBundle\Entity\SimilarArticles;
 use AppBundle\Form\NewsCreateType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,9 +32,9 @@ class NewsController extends Controller
         $dateTime = new \DateTime('now');
         $dateTime = $dateTime->format("Y-m-d");
         $news->setDatePublication($dateTime);
+        $news->setIdAuthor($this->getUser()->getId());
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $news->setIdAuthor($this->getUser()->getId());
             $saveNews = $this->getDoctrine()->getManager();
             $saveNews->persist($news);
             $saveNews->flush();

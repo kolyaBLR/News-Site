@@ -24,8 +24,8 @@ class DataNews
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DataUser")
      * @ORM\Column(name="id_author", type="integer")
+     * @Assert\NotBlank()
      */
     private $idAuthor;
 
@@ -42,16 +42,13 @@ class DataNews
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\NewsCategory")
      * @ORM\Column(name="category",type="string")
-     * @ORM\JoinColumn(name="category", referencedColumnName="category")
      * @Assert\NotBlank()
      */
     private $category;
 
     /**
      * @ORM\Column(name="date",type="string", length = 64)
-     *
      * @Assert\NotBlank()
      */
     private $datePublication;
@@ -61,6 +58,31 @@ class DataNews
      * @Assert\NotBlank()
      */
     private $viewCount = 0;
+
+    /**
+     * @ORM\Column(name="$link_news_1", type="string")
+     */
+    private $linkNews1 = '';
+
+    /**
+     * @ORM\Column(name="$link_news_2", type="string")
+     */
+    private $linkNews2 = '';
+
+    /**
+     * @ORM\Column(name="$link_news_3", type="string")
+     */
+    private $linkNews3 = '';
+
+    /**
+     * @ORM\Column(name="$link_news_4", type="string")
+     */
+    private $linkNews4 = '';
+
+    /**
+     * @ORM\Column(name="$link_news_5", type="string")
+     */
+    private $linkNews5 = '';
 
     public function getId()
     {
@@ -126,5 +148,25 @@ class DataNews
     public function setViewCount()
     {
         $this->viewCount += 1;
+    }
+
+    public function getLinkNews()
+    {
+        return [
+            $this->linkNews1,
+            $this->linkNews2,
+            $this->linkNews3,
+            $this->linkNews4,
+            $this->linkNews5
+        ];
+    }
+
+    public function setLinkNews($link1 = '', $link2 = '', $link3 = '', $link4 = '', $link5 = '')
+    {
+        $this->linkNews1 = $link1;
+        $this->linkNews2 = $link2;
+        $this->linkNews3 = $link3;
+        $this->linkNews4 = $link4;
+        $this->linkNews5 = $link5;
     }
 }

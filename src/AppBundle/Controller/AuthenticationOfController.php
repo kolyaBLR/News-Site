@@ -123,7 +123,7 @@ class AuthenticationOfController extends Controller
         $user = new DataUser();
         $form = $this->createForm(PasswordResetType::class, $user);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $token = $this->getDoctrine()
                 ->getRepository('AppBundle:TokenUser')
                 ->find($idToken);

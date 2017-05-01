@@ -27,8 +27,6 @@ class NewsCreateType extends AbstractType
             ))
             ->add('titleText', TextType::class)
             ->add('content', TextareaType::class);
-        //->add('titleImage', FileType::class, array(
-        //   'label' => 'Upload photo'));
     }
 
     public function configureOptions(OptionsResolver $resolver)

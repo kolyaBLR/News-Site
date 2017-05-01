@@ -19,11 +19,12 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
             ->setFirstResult($countNews)->getResult();
     }
 
-    public function getCountPage($catehory = '')
+    public function getCountPage($category = '')
     {
+        $category = $category == '' ? '' : "WHERE n.category = '$category'";
         return $this->getEntityManager()
             ->createQuery("SELECT count (n) FROM AppBundle:DataNews n
-              WHERE n.category = '$catehory'")
+              $category")
             ->getResult()[0][1] / 5;
     }
 
