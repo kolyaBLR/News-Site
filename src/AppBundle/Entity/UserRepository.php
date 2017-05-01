@@ -24,4 +24,23 @@ class UserRepository extends EntityRepository
               WHERE u.subscriptionEmail = TRUE")
             ->getResult();
     }
+
+    public function getUserSearchByPage($countUsers, $indexPage)
+    {
+        $indexPage -= 1;
+        return $this->getEntityManager()
+            ->createQuery("
+              SELECT u 
+              FROM AppBundle:DataUser u
+              ")
+            ->setMaxResults($countUsers)
+            ->setFirstResult($indexPage)->getResult();
+    }
+
+    public function getCountPage($countUsersPage)
+    {
+        return $this->getEntityManager()
+                ->createQuery("SELECT count (n) FROM AppBundle:DataUSer n")
+                ->getResult()[0][1] / $countUsersPage;
+    }
 }
