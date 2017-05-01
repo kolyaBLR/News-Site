@@ -97,9 +97,6 @@
                 <div class="login-register">
                     <a href="{{ path('login') }}">Login</a>
                 </div>
-                {% if error %}
-                    <div><br>{{error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
 
                 {{ form_row(form._token) }}
             </form>
