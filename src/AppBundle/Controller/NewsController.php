@@ -119,7 +119,7 @@ class NewsController extends Controller
     }
 
     /**
-     * @Route("/news/category/{category}/{page}", name="newsCategory")
+     * @Route("/news/category/{category}/", name="newsCategory")
      */
     public function viewTitleNewsCategoryAction(Request $request, string $category, int $page = 1)
     {
