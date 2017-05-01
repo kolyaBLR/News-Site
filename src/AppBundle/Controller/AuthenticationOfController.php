@@ -83,6 +83,7 @@ class AuthenticationOfController extends Controller
         $message = 'Accaunt activated.';
         return $this->render('authorize/successMessage.html.twig', array(
             'message' => $message,
+            'routName' => 'login',
         ));
     }
 

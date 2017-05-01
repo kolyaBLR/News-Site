@@ -60,27 +60,27 @@ class DataNews
     private $viewCount = 0;
 
     /**
-     * @ORM\Column(name="$link_news_1", type="string")
+     * @ORM\Column(name="$link_news_1", type="string", nullable=true)
      */
     private $linkNews1 = '';
 
     /**
-     * @ORM\Column(name="$link_news_2", type="string")
+     * @ORM\Column(name="$link_news_2", type="string", nullable=true)
      */
     private $linkNews2 = '';
 
     /**
-     * @ORM\Column(name="$link_news_3", type="string")
+     * @ORM\Column(name="$link_news_3", type="string", nullable=true)
      */
     private $linkNews3 = '';
 
     /**
-     * @ORM\Column(name="$link_news_4", type="string")
+     * @ORM\Column(name="$link_news_4", type="string", nullable=true)
      */
     private $linkNews4 = '';
 
     /**
-     * @ORM\Column(name="$link_news_5", type="string")
+     * @ORM\Column(name="$link_news_5", type="string", nullable=true)
      */
     private $linkNews5 = '';
 
@@ -150,23 +150,53 @@ class DataNews
         $this->viewCount += 1;
     }
 
-    public function getLinkNews()
+    public function getLinkNews1()
     {
-        return [
-            $this->linkNews1,
-            $this->linkNews2,
-            $this->linkNews3,
-            $this->linkNews4,
-            $this->linkNews5
-        ];
+        return $this->linkNews1;
     }
 
-    public function setLinkNews($link1 = '', $link2 = '', $link3 = '', $link4 = '', $link5 = '')
+    public function setLinkNews1($linkNews)
     {
-        $this->linkNews1 = $link1;
-        $this->linkNews2 = $link2;
-        $this->linkNews3 = $link3;
-        $this->linkNews4 = $link4;
-        $this->linkNews5 = $link5;
+        $this->linkNews1 = $linkNews;
+    }
+
+    public function getLinkNews2()
+    {
+        return $this->linkNews2;
+    }
+
+    public function setLinkNews2($linkNews)
+    {
+        $this->linkNews2 = $linkNews;
+    }
+
+    public function getLinkNews3()
+    {
+        return $this->linkNews3;
+    }
+
+    public function setLinkNews3($linkNews)
+    {
+        $this->linkNews3 = $linkNews;
+    }
+
+    public function getLinkNews4()
+    {
+        return $this->linkNews4;
+    }
+
+    public function setLinkNews4($linkNews)
+    {
+        $this->linkNews4 = $linkNews;
+    }
+
+    public function getLinkNews5()
+    {
+        return $this->linkNews5;
+    }
+
+    public function setLinkNews5($linkNews)
+    {
+        $this->linkNews5 = $linkNews;
     }
 }

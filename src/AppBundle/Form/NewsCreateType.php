@@ -26,7 +26,22 @@ class NewsCreateType extends AbstractType
                 'choice_label' => 'category',
             ))
             ->add('titleText', TextType::class)
-            ->add('content', TextareaType::class);
+            ->add('content', TextareaType::class)
+            ->add('linkNews1', TextType::class, array(
+                'required' => false,
+            ))
+            ->add('linkNews2', TextType::class, array(
+                'required' => false,
+            ))
+            ->add('linkNews3', TextType::class, array(
+                'required' => false,
+            ))
+            ->add('linkNews4', TextType::class, array(
+                'required' => false,
+            ))
+            ->add('linkNews5', TextType::class, array(
+                'required' => false,
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
