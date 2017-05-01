@@ -123,16 +123,20 @@ class NewsController extends Controller
      */
     public function viewTitleNewsCategoryAction(Request $request, string $category, int $page = 1)
     {
-        $countPage = $this->getDoctrine()->getRepository('AppBundle:DataNews')
-            ->getCountPage($category);
-        $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+             $newsPost = $this->getDoctrine()->getRepository('AppBundle:DataNews')
             ->getNewsSearchByIndexPageCategory($page, $category);
         $categories = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
             ->findAll();
+        $paginator = $this->get('knp_paginator');
+        $news = $paginator->paginate(
+            $newsPost,
+            $request->query->getInt('page',1),
+            $request->query->getInt('limit',5)
+        );
+
         return $this->render('news/news.html.twig', array(
             'News' => $news,
             'categories' => $categories,
-            'countPage' => $countPage,
         ));
     }
 }
