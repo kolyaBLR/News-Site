@@ -25,6 +25,7 @@ class NewsCreateType extends AbstractType
                 'class' => 'AppBundle:NewsCategory',
                 'choice_label' => 'category',
             ))
+            ->add('nameNews', TextType::class)
             ->add('titleText', TextType::class)
             ->add('content', TextareaType::class)
             ->add('linkNews1', TextType::class, array(

@@ -1,1 +1,8 @@
-{{ name }}
+{{ name }}</br>
+{% for news in News %}
+    {{ news.titleText  }}</br>
+    {{ news.nameNews }}</br>
+    <a href="{{absolute_url(path('oneNews', {'idNews': news.id, 'idAuthor' : news.idAuthor  })) }}">
+        click
+    </a></br>
+{% endfor %}

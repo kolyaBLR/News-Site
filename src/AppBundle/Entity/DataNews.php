@@ -30,7 +30,13 @@ class DataNews
     private $idAuthor;
 
     /**
-     * @ORM\Column(name="title_text",type="string", length = 128)
+     * @ORM\Column(name="name_news", type="string", length = 64)
+     * @Assert\NotBlank()
+     */
+    private $nameNews;
+
+    /**
+     * @ORM\Column(name="title_text",type="string", length = 256)
      * @Assert\NotBlank()
      */
     private $titleText;
@@ -42,13 +48,13 @@ class DataNews
     private $content;
 
     /**
-     * @ORM\Column(name="category",type="string")
+     * @ORM\Column(name="category",type="string", length = 64)
      * @Assert\NotBlank()
      */
     private $category;
 
     /**
-     * @ORM\Column(name="date",type="string", length = 64)
+     * @ORM\Column(name="date",type="datetime", length = 64)
      * @Assert\NotBlank()
      */
     private $datePublication;
@@ -99,6 +105,16 @@ class DataNews
         $this->idAuthor = $idAuthor;
     }
 
+    public function getNameNews()
+    {
+        return $this->nameNews;
+    }
+
+    public function setNameNews($nameNews)
+    {
+        $this->nameNews = $nameNews;
+    }
+
     public function getTitleText()
     {
         return $this->titleText;
@@ -135,7 +151,7 @@ class DataNews
         return $this->datePublication;
     }
 
-    public function setDatePublication($datePublication)
+    public function setDatePublication(\DateTime $datePublication)
     {
         $this->datePublication = $datePublication;
     }

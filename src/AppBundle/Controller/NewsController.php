@@ -29,9 +29,7 @@ class NewsController extends Controller
     {
         $news = new DataNews();
         $form = $this->createForm(NewsCreateType::class, $news);
-        $dateTime = new \DateTime('now');
-        $dateTime = $dateTime->format("Y-m-d");
-        $news->setDatePublication($dateTime);
+        $news->setDatePublication(new \DateTime('now'));
         $news->setIdAuthor($this->getUser()->getId());
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -39,6 +37,30 @@ class NewsController extends Controller
             $saveNews->persist($news);
             $saveNews->flush();
             $message = 'New created.';
+            return $this->render('authorize/successMessage.html.twig', array(
+                'message' => $message,
+                'routName' => 'news',
+            ));
+        }
+        return $this->render('news/createNews.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/news/edit/{idNews}", name="edit")
+     */
+    public function editNewsAction(Request $request, int $idNews)
+    {
+        $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+            ->find($idNews);
+        $form = $this->createForm(NewsCreateType::class, $news);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $saveNews = $this->getDoctrine()->getManager();
+            $saveNews->persist($news);
+            $saveNews->flush();
+            $message = 'New edit.';
             return $this->render('authorize/successMessage.html.twig', array(
                 'message' => $message,
                 'routName' => 'news',

@@ -76,6 +76,8 @@ class EmailsController extends Controller
         $User = $this->getDoctrine()
             ->getRepository('AppBundle:DataUser')
             ->getUserSubscriptionEmail();
+        $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+            ->getLastNewsGroupId();
         foreach ($User as $user) {
             $name = $user['firstName'] . ' ' . $user['lastName'];
             $message = \Swift_Message::newInstance()
@@ -85,6 +87,7 @@ class EmailsController extends Controller
                 ->setBody(
                     $this->renderView('Emails/sendingMessages.html.twig', array(
                         'name' => $name,
+                        'News' => $news
                     )),
                     'text/html'
                 );

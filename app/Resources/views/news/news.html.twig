@@ -67,13 +67,16 @@
     <div>
         {% for news in News %}
         <div class="newsid">
-            <h2 class="text-center"><a href="#">{{ news.titleText }}</a></h2>
+            <h2 class="text-center">
+                <a href="{{ path('oneNews', {'idNews': news.id, 'idAuthor' : news.idAuthor}) }}">
+                    {{ news.nameNews }}
+                </a></h2>
             <span>
-                {{ news.content }}
+                {{ news.titleText }}
                 <a href="{{ path('oneNews', {'idNews': news.id, 'idAuthor' : news.idAuthor}) }}"> продолжение</a></br></br>
                 <p>
                     author: {{ news.firstName }} {{ news.lastName }}</br>
-                    data: {{ news.datePublication }}</br>
+                    data: {{ news.datePublication.date }}</br>
                     category: {{ news.category }}
                 </p>
             </span>

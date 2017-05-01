@@ -10,7 +10,7 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
         $countNews = ($page - 1) * 5;
         return $this->getEntityManager()
             ->createQuery("
-              SELECT n.id, n.category, n.titleText, n.content, u.firstName, 
+              SELECT n.id, n.category, n.titleText, n.nameNews, u.firstName, 
               u.lastName, n.datePublication, n.idAuthor, n.viewCount
               FROM AppBundle:DataUser u INNER JOIN AppBundle:DataNews n
               WITH n.idAuthor = u.id
@@ -23,8 +23,7 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
     {
         $category = $category == '' ? '' : "WHERE n.category = '$category'";
         return $this->getEntityManager()
-            ->createQuery("SELECT count (n) FROM AppBundle:DataNews n
-              $category")
+            ->createQuery("SELECT count (n) FROM AppBundle:DataNews n $category")
             ->getResult()[0][1] / 5;
     }
 
@@ -39,5 +38,16 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
               WHERE n.idAuthor = $idAuthor AND n.id = $idNews")
             ->getResult();
          return $news[0];
+    }
+
+    public function getLastNewsGroupId()
+    {
+        return $this->getEntityManager()
+            ->createQuery('
+              SELECT n.titleText, n.nameNews, n.id, n.idAuthor
+              FROM AppBundle:DataNews n
+              ORDER BY n.datePublication DESC')
+            ->setMaxResults(5)
+            ->getResult();
     }
 }
