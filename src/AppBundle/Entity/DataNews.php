@@ -36,7 +36,7 @@ class DataNews
     private $titleText;
 
     /**
-     * @ORM\Column(name="content",type="string")
+     * @ORM\Column(name="content",type="text")
      * @Assert\NotBlank()
      */
     private $content;
@@ -61,25 +61,6 @@ class DataNews
      * @Assert\NotBlank()
      */
     private $viewCount = 0;
-
-    /*public function __construct(
-        int $idAuthor,
-        string $titleText,
-        string $titleImage,
-        string $content,
-        string $category,
-        $dataPublication,
-        int $viewCount
-    )
-    {
-        $this->idAuthor = $idAuthor;
-        $this->titleText = $titleText;
-        $this->titleImage = $titleImage;
-        $this->content = $content;
-        $this->category = $category;
-        $this->dataPublication = $dataPublication;
-        $this->viewCount = $viewCount;
-    }*/
 
     public function getId()
     {

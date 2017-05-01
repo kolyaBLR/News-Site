@@ -16,7 +16,7 @@ use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class newsCreateType extends AbstractType
+class NewsCreateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

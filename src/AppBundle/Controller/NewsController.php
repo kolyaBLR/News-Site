@@ -6,7 +6,7 @@ use AppBundle\AppBundle;
 use AppBundle\Entity\DataNews;
 use AppBundle\Entity\DataUser;
 use AppBundle\Entity\NewsCategory;
-use AppBundle\Form\newsCreateType;
+use AppBundle\Form\NewsCreateType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +18,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
+
 class NewsController extends Controller
 {
     /**
@@ -26,7 +27,7 @@ class NewsController extends Controller
     public function createNewsAction(Request $request)
     {
         $news = new DataNews();
-        $form = $this->createForm(newsCreateType::class, $news);
+        $form = $this->createForm(NewsCreateType::class, $news);
         $dateTime = new \DateTime('now');
         $dateTime = $dateTime->format("Y-m-d");
         $news->setDatePublication($dateTime);
@@ -48,13 +49,37 @@ class NewsController extends Controller
     public function viewTitleNewsAction(Request $request, int $page = 1)
     {
         $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
-            ->getNewsSearchByIndexPage($page);
+            ->getNewsSearchByIndexPageCategory($page);
         $categories = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
             ->findAll();
         $countPage = $this->getDoctrine()->getRepository('AppBundle:DataNews')
-            ->getCountNews();
+            ->getCountPage();
         return $this->render('news/news.html.twig', array(
             'News' => $news,
+            'categories' => $categories,
+            'countPage' => $countPage,
+        ));
+    }
+
+    /**
+     * @Route("/news/id/{idNews}/{idAuthor}", name="oneNews")
+     */
+    public function viewNewsAction(Request $request, int $idNews = 1, int $idAuthor)
+    {
+        $countPage = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+            ->getCountPage();
+        $categories = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
+            ->findAll();
+        $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+            ->find($idNews);
+        $news->setViewCount();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($news);
+        $em->flush();
+        $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+            ->getOneNewsSearchByIdAuthor($idNews, $idAuthor);
+        return $this->render('news/newsId.html.twig', array(
+            'news' => $news,
             'categories' => $categories,
             'countPage' => $countPage,
         ));
@@ -65,13 +90,16 @@ class NewsController extends Controller
      */
     public function viewTitleNewsCategoryAction(Request $request, string $category, int $page = 1)
     {
+        $countPage = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+            ->getCountPage($category);
         $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
-            ->getNewsSearchByCategory($page, $category);
+            ->getNewsSearchByIndexPageCategory($page, $category);
         $categories = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
             ->findAll();
         return $this->render('news/news.html.twig', array(
             'News' => $news,
             'categories' => $categories,
+            'countPage' => $countPage,
         ));
     }
 }

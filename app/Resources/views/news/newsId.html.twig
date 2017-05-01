@@ -50,35 +50,29 @@
             margin: 10px;
             background-color: rgba(202, 211, 203, 0.59);
             width: 45%;
-            float: left;
         }
     </style>
 </head>
 <body>
-        <ul class="menu">
-            <li><a href="{{ url('news') }}">Home</a></li>
-            {% for category in categories %}
-                <li><a href="{{ path('newsCategory', {'category': category.category, 'page' : 1 }) }}">
-                        {{ category.category }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    <div>
-        {% for news in News %}
-        <div class="newsid">
-            <h2 class="text-center"><a href="#">{{ news.titleText }}</a></h2>
-            <span>
-                {{ news.content }}
-                <a href="{{ path('oneNews', {'idNews': news.id, 'idAuthor' : news.idAuthor}) }}"> продолжение</a></br></br>
-                <p>
-                    author: {{ news.firstName }} {{ news.lastName }}</br>
-                    data: {{ news.datePublication }}</br>
-                    category: {{ news.category }}
-                </p>
-            </span>
-        </div>
-        {% endfor %}
+<ul class="menu">
+    <li><a href="{{ url('news') }}">Home</a></li>
+    {% for category in categories %}
+        <li><a href="{{ path('newsCategory', {'category': category.category, 'page' : 1 }) }}">
+                {{ category.category }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+    <div class="newsid">
+        <h2 class="text-center"><a href="#">{{ news.titleText }}</a></h2>
+        <span>
+            {{ news.content }}</br>
+            <p>
+                author: {{ news.firstName }} {{ news.lastName }}</br>
+                data: {{ news.datePublication }}</br>
+                category: {{ news.category }}
+            </p>
+        </span>
     </div>
 COUNT: {{ countPage }}
 </body>
