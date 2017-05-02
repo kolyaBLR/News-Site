@@ -26,7 +26,7 @@ class NewsCreateType extends AbstractType
                 'choice_label' => 'category',
             ))
             ->add('nameNews', TextType::class)
-            ->add('titleText', TextType::class)
+            ->add('titleText', TextareaType::class)
             ->add('content', TextareaType::class)
             ->add('linkNews1', TextType::class, array(
                 'required' => false,
