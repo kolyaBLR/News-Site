@@ -1086,7 +1086,7 @@ html {
 }
 body {
   font-family: "Roboto", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.42857143;
   color: #333;
   background-color: #8DC26F;
@@ -5462,6 +5462,7 @@ button.list-group-item-danger.active:focus {
 .panel-body {
   padding: 15px;
   padding-top: 5px;
+  word-wrap: break-word;
 }
 .panel-heading {
   padding: 10px 15px;
