@@ -6,12 +6,14 @@ use AppBundle\Entity\DataNews;
 use AppBundle\Entity\DataUser;
 use AppBundle\Entity\UserRepository;
 use AppBundle\Form\AuthorizationType;
+use AppBundle\Form\EditCategoryType;
 use AppBundle\Form\newsCreateType;
 use AppBundle\Form\PasswordResetEmailType;
 use AppBundle\Form\RegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Tests\Fixtures\Validation\Category;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Serializer;
@@ -28,19 +30,20 @@ class CategoryController extends Controller
     /**
      * @Route("/category/edit/", name="editCategory")
      */
-    public function getCategoryAction()
+    public function getCategoryAction(Request $request)
     {
-        $news = new DataNews();
-        $form = $this->createForm(NewsCreateType::class, $news);
-        $category = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
-            ->findAll();
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
-        $category = $serializer->serialize($category, 'json');
+        $category = new NewsCategory('');
+        $form = $this->createForm(EditCategoryType::class, $category);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $saveCategory = $this->getDoctrine()->getManager();
+            $saveCategory->persist($category);
+            $saveCategory->flush();
+        }
         $category = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
             ->findAll();
         return $this->render('category/editCategory.html.twig', array(
+            'form' => $form->createView(),
             'categories' => $category,
         ));
     }
@@ -55,7 +58,7 @@ class CategoryController extends Controller
         $manager = $this->getDoctrine()->getManager();
         $manager->remove($category);
         $manager->flush();
-        return $this->redirectToRoute('getCategory');
+        return $this->redirectToRoute('editCategory');
     }
 
     /**
@@ -66,6 +69,6 @@ class CategoryController extends Controller
         $manager = $this->getDoctrine()->getManager();
         $manager->persist(new NewsCategory($name));
         $manager->flush();
-        return $this->redirectToRoute('getCategory');
+        return $this->redirectToRoute('editCategory');
     }
 }
