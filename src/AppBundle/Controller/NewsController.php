@@ -18,7 +18,6 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-
 class NewsController extends Controller
 {
     /**
@@ -85,7 +84,6 @@ class NewsController extends Controller
             $request->query->getInt('page', 1),
             $request->query->getInt('limit', 5)
         );
-
         return $this->render('news/news.html.twig', array(
             'News' => $news,
             'categories' => $categories,
@@ -132,7 +130,6 @@ class NewsController extends Controller
             $request->query->getInt('page', 1),
             $request->query->getInt('limit', 5)
         );
-
         return $this->render('news/news.html.twig', array(
             'News' => $news,
             'categories' => $categories,

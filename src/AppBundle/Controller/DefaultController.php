@@ -34,26 +34,14 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/test/{idToken}")
+     * @Route("/test")
      */
-    public function tokenActivationAction(Request $request, int $idToken)
+    public function tokenActivationAction(Request $request)
     {
-        $token = $this->getDoctrine()
-            ->getRepository('AppBundle:TokenUser')
-            ->find($idToken);
-        if ($token) {
-            $user = $this->getDoctrine()
-                ->getRepository('AppBundle:DataUser')
-                ->getUserSearchByEmail($token->getEmail());
-            if ($user) {
-                $user[0]->setEnabled(true);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user[0]);
-                $em->remove($token);
-                $em->flush();
-            }
-        }
-        return new Response(var_dump($token) . var_dump($user));
+        $users = $this->getDoctrine()
+            ->getRepository('AppBundle:DataUser')
+            ->findAll();
+        return new $this->render('');
         //return $this->redirectToRoute('login');
     }
 
