@@ -6,7 +6,6 @@ use AppBundle\AppBundle;
 use AppBundle\Entity\DataNews;
 use AppBundle\Entity\DataUser;
 use AppBundle\Entity\NewsCategory;
-use AppBundle\Entity\SimilarArticles;
 use AppBundle\Form\NewsCreateType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -83,8 +82,8 @@ class NewsController extends Controller
         $paginator = $this->get('knp_paginator');
         $news = $paginator->paginate(
             $newsPost,
-            $request->query->getInt('page',1),
-            $request->query->getInt('limit',5)
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 5)
         );
 
         return $this->render('news/news.html.twig', array(
@@ -123,15 +122,15 @@ class NewsController extends Controller
      */
     public function viewTitleNewsCategoryAction(Request $request, string $category, int $page = 1)
     {
-             $newsPost = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+        $newsPost = $this->getDoctrine()->getRepository('AppBundle:DataNews')
             ->getNewsSearchByIndexPageCategory($page, $category);
         $categories = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
             ->findAll();
         $paginator = $this->get('knp_paginator');
         $news = $paginator->paginate(
             $newsPost,
-            $request->query->getInt('page',1),
-            $request->query->getInt('limit',5)
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 5)
         );
 
         return $this->render('news/news.html.twig', array(

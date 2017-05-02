@@ -25,6 +25,11 @@ class NewsCategory
      */
     private $category;
 
+    public function __construct(string $category)
+    {
+        $this->setCategory($category);
+    }
+
     public function getId()
     {
         return $this->id;
