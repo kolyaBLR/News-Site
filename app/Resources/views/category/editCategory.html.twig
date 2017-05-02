@@ -1,3 +1,4 @@
+{#
 {% for category in categories %}
     <span>{{ category.category }} </span>
     <a href="{{ path('deleteCategory', {'name': category.category}) }}">
@@ -8,3 +9,65 @@
 {{ form_widget(form) }}
 {{ form_end(form) }}
 <input type="submit"/>
+#}
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href={{ asset('css/bootstrap.css') }}>
+    <link rel="stylesheet" type="text/css" href={{ asset('css/categoryEdit.css') }}>
+
+    <!-- Website CSS style -->
+    <link rel="stylesheet" type="text/css" href={{ asset('css/register.css') }}>
+
+    <!-- Website Font style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+
+    <title>Admin</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Category</h4>
+            <div class="table-responsive">
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                    </thead>
+                    {% for category in categories %}
+                    <tbody>
+                        <tr>
+                            <td>{{ category.category }}
+                                <a class="btn btn-danger btn-xs" href=" {{ path('deleteCategory', {'name': category.category}) }}" ><span class="glyphicon glyphicon-trash"></span></a></td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<form method="post" action="{{ path('editCategory')}}">
+<div class="container container2">
+    <div class="row">
+        <div class="search">
+            <input id="edit_category_category" required="required" name="edit_category[category]" class="form-control input-sm" maxlength="64" placeholder="Enter category" />
+            <button type="submit" class=" btns btn btn-primary btn-sm">Submit</button>
+        </div>
+    </div>
+</div>
+    {{ form_row(form._token) }}
+</form>
+</body>
+</html>
+
