@@ -32,12 +32,8 @@ class UserController extends Controller
         int $indexPage = 1
     )
     {
-        /*$news = $this->getDoctrine()->getRepository('AppBundle:DataUser')
-            ->findAll();*/
-        $user = new DataUser();
-        $user->setFirstName('Kolya');
-        $user->setLastName('Bobrov');
-        $users = array($user, $user, $user, $user);
+        $users = $this->getDoctrine()->getRepository('AppBundle:DataUser')
+            ->getUserSearchByPage($countUsersPage, $indexPage);
         $countPage = 10;
         $url = 'http://localhost:8000/getGrid';
         $data = array($users, $countPage, $url);
@@ -55,6 +51,6 @@ class UserController extends Controller
     {
         $news = $this->getDoctrine()->getRepository('AppBundle:DataUser')
             ->findAll();
-        return $this->render('users/index.html.twig');
+        return $this->render('users/adminGrid.html.twig');
     }
 }
