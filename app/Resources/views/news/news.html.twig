@@ -8,15 +8,6 @@
 
 </head>
 <body>
-{#<ul class="menu">
-    <li><a href="{{ url('news') }}">Home</a></li>
-    {% for category in categories %}
-        <li><a href="{{ path('newsCategory', {'category': category.category, 'page' : 1 }) }}">
-                {{ category.category }}
-            </a>
-        </li>
-    {% endfor %}
-</ul>#}
 <div class="container">
 
     <!-- Static navbar -->
@@ -51,7 +42,7 @@
 
                 </ul>
 
-            </div><!--/.nav-collapse -->
+            </div>
         </div>
     </div>
 
@@ -102,10 +93,9 @@
         </div>
     </div>
     {% endfor %}
-    <div class="text-center"><ul class="pagination">
+    <div class="text-center"><div class="pagination">
             {{ knp_pagination_render(News) }}
-        </ul></div>
-</div>
+        </div></div>
 
 
 </body>
