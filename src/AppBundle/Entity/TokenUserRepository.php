@@ -12,6 +12,6 @@ class TokenUserRepository extends EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery("SELECT u FROM AppBundle:TokenUser u WHERE u.email = '$email'")
-            ->getResult();
+            ->getResult()[0];
     }
 }

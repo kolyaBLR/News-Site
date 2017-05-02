@@ -1,0 +1,20 @@
+<script>
+    function query(url) {
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: showCategory
+        });
+    }
+    function deletesCategory(url) {
+        query(url);
+    }
+    query({{ path('deleteCategory', {'name': category.category}) }});
+</script>
+{% for category in categories %}
+    <span>{{ category.category }} </span>
+    <button onclick="deletesCategory({{ path('deleteCategory', {'name': category.category}) }})">
+        delete
+    </button></br>
+{% endfor %}

@@ -20,7 +20,7 @@ class EmailsController extends Controller
         $token = $this->getDoctrine()
             ->getRepository('AppBundle:TokenUser')
             ->getTokenSearchByEmail($email);
-        $id = $token[0]->getId();
+        $id = $token->getId();
         $message = \Swift_Message::newInstance()
             ->setSubject("Hello $name!")
             ->setFrom('bobrovkolja@gmail.com')
@@ -48,7 +48,7 @@ class EmailsController extends Controller
         $token = $this->getDoctrine()
             ->getRepository('AppBundle:TokenUser')
             ->getTokenSearchByEmail($email);
-        $id = $token[0]->getId();
+        $id = $token->getId();
         $message = \Swift_Message::newInstance()
             ->setSubject("Hello $name!")
             ->setFrom('bobrovkolja@gmail.com')
