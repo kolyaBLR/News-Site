@@ -1,90 +1,112 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <style>
-        body {
-            font: 14px 'Times New Roman';
-            margin: 0;
-            padding: 0;
-        }
-        ul {
-            display: block;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        ul:after {
-            display: block;
-            content: ' ';
-            clear: both;
-            float: none;
-        }
-        ul.menu > li {
-            float: left;
-            position: relative;
-        }
-        ul.menu > li > a {
-            display: block;
-            padding: 10px;
-            color: white;
-            background-color: #cad3cb;
-            color: black;
-            text-decoration: none;
-        }
-        ul.menu > li > a:hover {
-            background-color: black;
-            color: white;
-        }
-      /* .sizeImage {
-            height: 150px;
-            width: 150px;
-            float: left;
-            margin-right: 20px;
-        }*/
-        .newsid {
-            padding: 10px;
-            margin: 10px;
-            background-color: rgba(202, 211, 203, 0.59);
-            width: 80%;
-            float: left;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>News</title>
+    <link rel="stylesheet" href="{{ asset('css/news.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+
 </head>
 <body>
-        <ul class="menu">
-            <li><a href="{{ url('news') }}">Home</a></li>
-            {% for category in categories %}
-                <li><a href="{{ path('newsCategory', {'category': category.category, 'page' : 1 }) }}">
-                        {{ category.category }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    <div>
-        {% for news in News %}
-        <div class="newsid">
-            <h2 class="text-center">
-                <a href="{{ path('oneNews', {'idNews': news.id, 'idAuthor' : news.idAuthor}) }}">
-                    {{ news.nameNews }}
-                </a></h2>
-            <span>
-                {{ news.titleText }}
-                <a href="{{ path('oneNews', {'idNews': news.id, 'idAuthor' : news.idAuthor}) }}"> продолжение</a></br></br>
-                <p>
-                    author: {{ news.firstName }} {{ news.lastName }}</br>
-                    data: {{ news.datePublication.date }}</br>
-                    category: {{ news.category }}
-                </p>
-            </span>
+{#<ul class="menu">
+    <li><a href="{{ url('news') }}">Home</a></li>
+    {% for category in categories %}
+        <li><a href="{{ path('newsCategory', {'category': category.category, 'page' : 1 }) }}">
+                {{ category.category }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>#}
+<div class="container">
+
+    <!-- Static navbar -->
+    <div class="navbar navbar-static-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{{ path('news') }}">Apply for a home</a></li>
+                    <li class="dropdown menu-large">
+                        <a href="{{ path('news') }}" class="dropdown-toggle" data-toggle="dropdown">Category</a>
+                        <ul class="dropdown-menu megamenu row">
+                            <li class="col-sm-3">
+                                <ul>
+                                    {% for category in categories %}
+                                    <li><a href="{{ path('newsCategory', {'category': category.category, 'page' : 1 }) }}">
+                                            {{ category.category }}
+                                        </a></li>
+
+                                    {% endfor %}
+                                </ul>
+                        </ul>
+                    </li>
+                    <li><a href="{{ logout_path() }}" class="last">Logout</a></li>
+
+                </ul>
+
+            </div><!--/.nav-collapse -->
         </div>
-        {% endfor %}
     </div>
-        <div class="navigation">
-            {{ knp_pagination_render(News) }}
+
+</div>
+
+{% for news in News %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-1"></div>
+                  <div id="postlist">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="text-center">
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <h2 class="pull-left">
+                                            {{ news.nameNews }}
+                                        </h2>
+                                </div>
+                                <div class="col-sm-3">
+                                    <h4 class="pull-right">
+                                        <small><em>{{ news.datePublication|date('d-m-Y') }}</em></small>
+                                    <br>
+                                        <small><em>Author: {{ news.firstName }} {{ news.lastName }}</em></small>
+                                    <br>
+                                        <small><em>Category: {{ news.category }}</em></small>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        {{ news.titleText }}... <a href="{{ path('oneNews', {'idNews': news.id, 'idAuthor' : news.idAuthor}) }}">Read more</a>
+                    </div>
+
+                    <div class="panel-footer">
+                    </div>
+                </div>
+
+            </div>
+
         </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+    {% endfor %}
+    <div class="text-center"><ul class="pagination">
+            {{ knp_pagination_render(News) }}
+        </ul></div>
+</div>
+
+
 </body>
 </html>
