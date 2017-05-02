@@ -28,23 +28,21 @@ class CategoryController extends Controller
     /**
      * @Route("/category/edit/", name="editCategory")
      */
-    public function editCategoryAction()
-    {
-        return $this->render('category/editCategory.html.twig');
-    }
-
-    /**
-     * @Route("/category/get/", name="getCategory")
-     */
     public function getCategoryAction()
     {
+        $news = new DataNews();
+        $form = $this->createForm(NewsCreateType::class, $news);
         $category = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
             ->findAll();
         $encoders = array(new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
         $category = $serializer->serialize($category, 'json');
-        return new Response($category);
+        $category = $this->getDoctrine()->getRepository('AppBundle:NewsCategory')
+            ->findAll();
+        return $this->render('category/editCategory.html.twig', array(
+            'categories' => $category,
+        ));
     }
 
     /**
