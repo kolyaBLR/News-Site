@@ -19,15 +19,17 @@ class DocumentController extends Controller
         $file = new DataFile();
         $form = $this->createForm(DocumentType::class, $file);
         $form->add('Отправить', SubmitType::class);
-        if ($request->isMethod('POST')) {
-            $form->submit($request->request->get($form->getName()));
-            if ($form->isSubmitted() && $form->isValid()) {
-                var_dump($form);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($file);
-                $em->flush();
-            }
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file->getFile()->move(
+                $this->getParameter('brochures_directory'),
+                $file->getName()
+            );
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($file);
+            $em->flush();
         }
+
         return $this->render("document/documentDownload.html.twig",array(
             'form' => $form->createView(),
         ));
