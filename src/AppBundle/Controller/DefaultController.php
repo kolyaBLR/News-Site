@@ -46,10 +46,25 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/index")
+     * @Route("/index", name="index")
      */
     public function indexSait(Request $request)
     {
         return $this->render('index/index.twig');
+    }
+    /**
+     * @Route("/aboutus", name= "about")
+     */
+    public function aboutUs(Request $request)
+    {
+        return $this->render('index/aboutus.twig');
+    }
+
+    /**
+     * @Route("/product", name= "product")
+     */
+    public function product(Request $request)
+    {
+        return $this->render('index/Product.twig');
     }
 }

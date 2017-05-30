@@ -3,6 +3,8 @@
 body
 {
 margin:0 0 0 0px;
+	margin-left: 200px;
+	margin-right: 200px;
 
 }
 .underbanner {
@@ -240,6 +242,9 @@ height:40px;
 .menubar{
     background-color: #333;
 }
+.menubar li {
+	float: left;
+}
 ul {
     list-style-type: none;
     margin: 0;
@@ -247,9 +252,6 @@ ul {
     overflow: hidden;
 }
 
-li {
-    float: left;
-}
 
 li a {
     display: block;

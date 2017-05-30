@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraint as Assert;
 
 /**
+ * @ORM\Entity
  * @ORM\Table(name="data_file")
  */
 class DataFile
