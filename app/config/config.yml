@@ -85,3 +85,9 @@ knp_paginator:
     template:
         pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig     # sliding pagination controls template
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig                         # sort link template
+
+iphp_file_store:
+    mappings:
+       image:
+           upload_dir:  %kernel.root_dir%/../web/file
+           upload_path: /file
