@@ -150,6 +150,9 @@ COUNT: {{ countPage }}
                                         <small><em>Author: {{ news.firstName }} {{ news.lastName }}</em></small>
                                         <br>
                                         <small><em>Category: {{ news.category }}</em></small>
+                                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER') %}
+                                            <a href="{{ path('createId', {'id' : news.id }) }}">edit</a>
+                                        {% endif %}
                                     </h4>
                                 </div>
                             </div>

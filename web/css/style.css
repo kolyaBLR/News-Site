@@ -1,0 +1,265 @@
+/* CSS Document */
+
+body
+{
+margin:0 0 0 0px;
+
+}
+.underbanner {
+    font-family: 'Play', sans-serif;
+    font-size: 30px;
+}
+.headertext {
+    font-family: 'Play', sans-serif;
+    font-size: large;
+}
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+	outline:none;
+}
+.outertable
+{
+width:100%;
+padding-left: 0px;
+    position: relative;
+}
+.innertable
+{
+width:970px;
+margin-left:auto;
+margin-right:auto;
+}
+.blue-bg1
+{
+/*background-color:#e7f3f9;*/
+}
+.grey-bg
+{
+background-color:#f0f0f0;
+border-top:1px solid #dbd8d8;
+border-bottom:1px solid #dbd8d8;
+}
+.grey-bg1
+{
+background-color:#f7f7f7;
+border:1px solid #dbd8d8;
+}
+.white-bg
+{
+background-color:#FFFFFF;
+}
+.white-bg1
+{
+background-color:#FFFFFF;
+border-top:1px solid #dbd8d8;
+border-bottom:1px solid #dbd8d8;
+}
+.menu-bg
+{
+	background-image: url(../images/menu-bg.jpg);
+	background-repeat: repeat-x;
+	height: 38px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #FFFFFF;
+	text-decoration: none;
+	font-weight: bold;
+	width: 100%;
+	left: auto;
+	clip: rect(auto,auto,auto,auto);
+	bottom: auto;
+	right: auto;
+	top: auto;
+
+}
+.menu a{
+font-family:Arial, Helvetica, sans-serif;
+font-size:11px;
+color:#FFFFFF;
+text-decoration:none;
+font-weight:bold;
+}
+.menu a:hover{
+font-family:Arial, Helvetica, sans-serif;
+font-size:11px;
+color:#02527c;
+text-decoration:none;
+font-weight:bold;
+}
+.menu span{
+	background-image: url(../images/menu-vline.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 1px;
+	height: 22px;
+	padding-right: 30px;
+	padding-left: 30px;
+}
+.heading1
+{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:18px;
+color:#991C00;
+text-decoration:none;
+    padding-left: 10px;
+font-weight:bold;
+outline:none;
+}
+.heading2
+{
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:18px;
+color:#000000;
+text-decoration:none;
+font-weight:bold;
+outline:none;
+}
+.text1
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #000000;
+	text-decoration: blink;
+	line-height: 17px;
+	text-align: justify;
+	outline: none;
+	font-style: oblique;
+}
+.text2
+{
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+color:#646565;
+text-decoration:none;
+line-height:18px;
+outline:none;
+}
+.text3
+{
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+color:#000000;
+text-decoration:none;
+line-height:17px;
+text-align:justify;
+outline:none;
+}
+.text4
+{
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+color:#FF0000;
+text-decoration:none;
+line-height:17px;
+text-align:justify;
+outline:none;
+}
+.border1
+{
+border:1px solid #d3cfcf;
+}
+
+.border2
+{
+border-bottom:1px dotted #4f4a4a;
+}
+.link1
+{
+font-family:Arial, Helvetica, sans-serif;
+font-size:11px;
+color:#FFFFFF;
+text-decoration:none;
+outline:none;
+}
+.link1 a:link
+{
+font-family:Arial, Helvetica, sans-serif;
+font-size:11px;
+color:#FFFFFF;
+text-decoration:none;outline:none;
+}
+.link1 a:visited
+{
+font-family:Arial, Helvetica, sans-serif;
+font-size:11px;
+color:#FFFFFF;
+text-decoration:none;outline:none;
+}
+.link1 a:hover
+{
+font-family:Arial, Helvetica, sans-serif;
+font-size:11px;
+color:#2ea8e7;
+text-decoration:none;outline:none;
+}
+.link2
+{
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+color:#000000;
+text-decoration:none;outline:none;
+}
+.link2 a:link
+{
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+color:#000000;
+text-decoration:none;outline:none;
+}
+.link2 a:visited
+{
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+color:#000000;
+text-decoration:none;outline:none;
+}
+.link2 a:hover
+{ 
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+color:#FF0000;
+text-decoration:none;outline:none;
+}
+.footerbg
+{
+background-color: #0f0f0f;
+height:40px;
+}
+.outertable tr td table tr td table tr td .white-bg1 tr td table tr td table tr .text1 ul li {
+	color: #000000;
+}
+.outertable tr td table tr td table tr td .white-bg1 tr td table tr td table tr .text1 ul li strong {
+	color: #000;
+}
+.menubar{
+    background-color: #333;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+

@@ -45,4 +45,11 @@ class DefaultController extends Controller
         //return $this->redirectToRoute('login');
     }
 
+    /**
+     * @Route("/index")
+     */
+    public function indexSait(Request $request)
+    {
+        return $this->render('index/index.twig');
+    }
 }

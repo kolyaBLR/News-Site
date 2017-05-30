@@ -128,19 +128,17 @@ class AuthenticationOfController extends Controller
             $token = $this->getDoctrine()
                 ->getRepository('AppBundle:TokenUser')
                 ->find($idToken);
-            if ($token) {
-                $user = $this->getDoctrine()
-                    ->getRepository('AppBundle:DataUser')
-                    ->getUserSearchByEmail($token->getEmail());
-                if ($user) {
-                    $password = $this->get('security.password_encoder')
-                        ->encodePassword($user, $user->getPlainPassword());
-                    $user->setPassword($password);
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($user);
-                    $em->remove($token);
-                    $em->flush();
-                }
+            $user = $this->getDoctrine()
+                ->getRepository('AppBundle:DataUser')
+                ->getUserSearchByEmail($token->getEmail());
+            if ($user) {
+                $password = $this->get('security.password_encoder')
+                    ->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->remove($token);
+                $em->flush();
             }
         }
         return $this->render('authorize/passwordReset.html.twig', array(

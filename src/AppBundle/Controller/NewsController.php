@@ -46,6 +46,32 @@ class NewsController extends Controller
     }
 
     /**
+     * @Route("/news/create/{id}", name="createId")
+     */
+    public function createNewsIdAction(Request $request, int $id)
+    {
+        $news = $this->getDoctrine()->getRepository('AppBundle:DataNews')
+            ->find($id);
+        $form = $this->createForm(NewsCreateType::class, $news);
+        $news->setDatePublication(new \DateTime('now'));
+        $news->setIdAuthor($this->getUser()->getId());
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $saveNews = $this->getDoctrine()->getManager();
+            $saveNews->persist($news);
+            $saveNews->flush();
+            $message = 'New edit.';
+            return $this->render('authorize/successMessage.html.twig', array(
+                'message' => $message,
+                'routName' => 'news',
+            ));
+        }
+        return $this->render('news/createNews.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
      * @Route("/news/edit/{idNews}", name="edit")
      */
     public function editNewsAction(Request $request, int $idNews)
