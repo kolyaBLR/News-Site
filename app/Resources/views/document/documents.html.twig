@@ -1,0 +1,6 @@
+{% for file in files %}
+<span>{{ file.name }}</span>
+    <span>{{ file.email }}</span>
+    <a href="files/{{ file.name }}">download</a>
+    </br>
+{% endfor %}
